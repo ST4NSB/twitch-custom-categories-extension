@@ -4,8 +4,11 @@
 	"author": "ST4NSB",
 	"permissions": [
 		"tabs",
+		"storage",
+  		"activeTab",
 		"*://*.twitch.tv/**",
-		"*://api.twitch.tv/**"
+		"*://api.twitch.tv/**",
+		"*://old.reddit.com/**"
 	],
 	"description": "Custom categories integrated within Twitch",
 	"version": "1.0",
@@ -15,12 +18,14 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"*://*.twitch.tv/*"
+				"*://*.twitch.tv/*",
+				"*://old.reddit.com/*"
 			],
 			"css": [
 				"assets/content.css"
 			],
 			"js": [
+				"providers/storage.js",
 				"main_page.js"
 			]
 		},
