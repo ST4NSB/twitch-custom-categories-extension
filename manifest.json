@@ -1,0 +1,39 @@
+{
+	"manifest_version": 2,
+	"name": "Twitch custom categories",
+	"author": "ST4NSB",
+	"permissions": [
+		"tabs",
+		"*://*.twitch.tv/**",
+		"*://api.twitch.tv/**"
+	],
+	"description": "Custom categories integrated within Twitch",
+	"version": "1.0",
+    "web_accessible_resources": [
+        ".env"
+    ],
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.twitch.tv/*"
+			],
+			"css": [
+				"assets/content.css"
+			],
+			"js": [
+				"main_page.js"
+			]
+		},
+		{
+			"matches": [
+				"*://*.twitch.tv/*"
+			],
+            "css": [
+				"assets/content.css"
+			],
+			"js": [
+				"channel.js"
+			]
+		}
+	]
+}
