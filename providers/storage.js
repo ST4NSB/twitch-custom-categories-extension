@@ -86,3 +86,17 @@ async function getAllChannels() {
 
   return [...new Set([...allChannels])];
 }
+
+async function getCategoriesContainingChannel(channel) {
+  const categories = await getCategories();
+  let assignedCategories = [];
+
+  for (let i = 0; i < categories.length; i++) {
+    let channelsForCategory = await getChannelsInCategory(categories[i]);
+    if (channelsForCategory.includes(channel)) {
+      assignedCategories = [...assignedCategories, categories[i]];
+    }
+  }
+
+  return assignedCategories;
+}

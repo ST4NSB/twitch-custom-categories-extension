@@ -32,6 +32,9 @@
 			"matches": [
 				"*://*.twitch.tv/*"
 			],
+			"exclude_matches": [
+				"*://*.twitch.tv/directory/following"
+			],
             "css": [
 				"assets/content.css"
 			],

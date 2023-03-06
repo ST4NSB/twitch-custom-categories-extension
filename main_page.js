@@ -1,7 +1,7 @@
 async function main() {
   try {
-    deleteCategorryButton();
-    addCategoryButton();
+    renderDeleteCategorryButton();
+    renderAddCategoryButton();
     const addCategoryButtonId = document.getElementById("addCustomCategory");
     const deleteCategoryButtonId = document.getElementById(
       "deleteCustomCategory"
@@ -9,7 +9,7 @@ async function main() {
 
     addCategoryButtonId.addEventListener("click", async function () {
       const category = prompt(
-        "Please enter a custom category name:",
+        "Please enter a custom category name: \n",
         ""
       ).trim();
       if (!category || category === "") {
@@ -32,12 +32,13 @@ async function main() {
 
       let categoriesDictionary = {};
       let promptMessage =
-        "Delete a category by typing the numbers splitted by comma ',': \n";
+        "Delete a category by typing the numbers splitted by comma ',': \n\n";
 
       for (let i = 0; i < allCategories.length; i++) {
         promptMessage += `${i}: ${allCategories[i]} \n`;
         categoriesDictionary[i] = allCategories[i];
       }
+      promptMessage += "\n";
 
       const categories = prompt(promptMessage, "")
         .trim()
