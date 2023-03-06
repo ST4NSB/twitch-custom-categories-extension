@@ -6,8 +6,7 @@
 		"tabs",
 		"storage",
   		"activeTab",
-		"*://*.twitch.tv/**",
-		"*://old.reddit.com/**"
+		"*://*.twitch.tv/**"
 	],
 	"description": "Custom categories integrated within Twitch",
 	"version": "1.0",
@@ -17,8 +16,7 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"*://*.twitch.tv/*",
-				"*://old.reddit.com/*"
+				"*://*.twitch.tv/directory/following"
 			],
 			"css": [
 				"assets/content.css"
@@ -26,6 +24,7 @@
 			"js": [
 				"providers/storage.js",
 				"providers/twitch_integration.js",
+				"generators/html_generator.js",
 				"main_page.js"
 			]
 		},
@@ -39,6 +38,7 @@
 			"js": [
 				"providers/storage.js",
 				"providers/twitch_integration.js",
+				"generators/html_generator.js",
 				"channel.js"
 			]
 		}
