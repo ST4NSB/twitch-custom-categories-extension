@@ -7,7 +7,6 @@
 		"storage",
   		"activeTab",
 		"*://*.twitch.tv/**",
-		"*://api.twitch.tv/**",
 		"*://old.reddit.com/**"
 	],
 	"description": "Custom categories integrated within Twitch",
@@ -26,6 +25,7 @@
 			],
 			"js": [
 				"providers/storage.js",
+				"providers/twitch_integration.js",
 				"main_page.js"
 			]
 		},
@@ -37,6 +37,8 @@
 				"assets/content.css"
 			],
 			"js": [
+				"providers/storage.js",
+				"providers/twitch_integration.js",
 				"channel.js"
 			]
 		}

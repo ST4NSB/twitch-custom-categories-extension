@@ -3,12 +3,6 @@ async function getCategories() {
   return data.categories || [];
 }
 
-async function addCategory(category) {
-  const categories = await getCategories();
-  const allCategories = [...categories, category];
-  browser.storage.local.set({ categories: allCategories }, function () {});
-}
-
 async function doesCategoryExist(category) {
   const categories = await getCategories();
   if (categories.includes(category)) {
@@ -18,7 +12,23 @@ async function doesCategoryExist(category) {
   return false;
 }
 
+async function addCategory(category) {
+  const catExist = await doesCategoryExist(category);
+  if (catExist) {
+    return;
+  }
+
+  const categories = await getCategories();
+  const allCategories = [...categories, category];
+  browser.storage.local.set({ categories: allCategories }, function () {});
+}
+
 async function deleteCategory(category) {
+  const catExist = await doesCategoryExist(category);
+  if (!catExist) {
+    return;
+  }
+
   const categories = await getCategories();
   const categoriesLeft = categories.filter((x) => x !== category);
   browser.storage.local.set({ categories: categoriesLeft }, function () {});
@@ -32,12 +42,6 @@ async function getChannelsInCategory(category) {
   return data[category] || [];
 }
 
-async function addChannelToCategory(channel, category) {
-  const channels = await getChannelsInCategory(category);
-  const allChannels = [...channels, channel];
-  browser.storage.local.set({ [category]: allChannels }, function () {});
-}
-
 async function isChannelInCategory(channel, category) {
   const channels = await getChannelsInCategory(category);
   if (channels.includes(channel)) {
@@ -47,8 +51,38 @@ async function isChannelInCategory(channel, category) {
   return false;
 }
 
+async function addChannelToCategory(channel, category) {
+  const channelInCat = await isChannelInCategory(channel, category);
+  if (channelInCat) {
+    return;
+  }
+
+  const channels = await getChannelsInCategory(category);
+  const allChannels = [...channels, channel];
+  browser.storage.local.set({ [category]: allChannels }, function () {});
+}
+
 async function deleteChannel(channel, category) {
+  const channelInCat = await isChannelInCategory(channel, category);
+  if (!channelInCat) {
+    return;
+  }
+
   const channels = await getChannelsInCategory(category);
   const channelsLeft = channels.filter((x) => x !== channel);
   browser.storage.local.set({ [category]: channelsLeft }, function () {});
+}
+
+// -----------------------------------------------------------------------
+
+async function getAllChannels() {
+  let allChannels = [];
+  const categories = await getCategories();
+
+  for (let i = 0; i < categories.length; i++) {
+    let channels = await getChannelsInCategory(categories[i]);
+    allChannels = [...allChannels, ...channels];
+  }
+
+  return [...new Set([...allChannels])];
 }

@@ -1,27 +1,31 @@
-// fetch(chrome.runtime.getURL(".env"))
-//   .then((response) => response.text())
-//   .then((text) => {
-//     const env = Object.fromEntries(
-//       text.split("\r\n").map((line) => line.split("="))
-//     );
-//     console.log("environment vars: ", env);
-//   });
-
 async function main() {
   await deleteCategory("test");
-  await deleteChannel("xqc", "test");
-  //await addCategory("test");
+  // await deleteChannel("xqc", "test");
+  // await deleteChannel("forsen", "test");
 
-  //await addChannelToCategory("xqc", "test");
+  // await deleteCategory("test2");
+  // await deleteChannel("xqc", "test2");
 
-  console.log("categories:", await getCategories());
-  console.log("channels in categories: ", await getChannelsInCategory("test"));
+  // await addCategory("test");
+  // await addChannelToCategory("xqc", "test");
+  // await addChannelToCategory("forsen", "test");
 
-  console.log("does category exist: ", await doesCategoryExist("test"));
-  console.log(
-    "is channel in category: ",
-    await isChannelInCategory("xqc", "test")
-  );
+  // await addCategory("test2");
+  // await addChannelToCategory("xqc", "test2");
+
+  //const token = await getOAUTH2Token();
+  //const liveUsers = await getLiveChannels(["forsen", "AustinShow"], token);
+
+  //console.log("live users: ", liveUsers);
+  //console.log("all channels: ", await getAllChannels());
+
+  try {
+    //throw new Error("Cannot divide by zero.");
+  } catch (err) {
+    const msg = `Twitch Custom Categories - main_page.js - ${err}`;
+    console.log(msg);
+    alert(msg);
+  }
 }
 
 main();
