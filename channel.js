@@ -22,7 +22,7 @@ async function main() {
 
       let categoriesDictionary = {};
       let promptMessage =
-        "Add this channel to a category by typing the numbers splitted by comma ',': \n\n";
+        "Add this channel to a category by typing the numbers splitted by commas ','\nExisting categories:\n\n";
 
       for (let i = 0; i < allCategories.length; i++) {
         promptMessage += `${i}: ${allCategories[i]} \n`;
@@ -58,13 +58,15 @@ async function main() {
 
         const allCategories = await getCategoriesContainingChannel(channelName);
         if (allCategories.length === 0) {
-          alert("There are NO existing categories! Add a category first!");
+          alert(
+            "There are NO existing categories for this channel! Add a category first!"
+          );
           return;
         }
 
         let categoriesDictionary = {};
         let promptMessage =
-          "Delete this channel from a category by typing the numbers splitted by comma ',': \n\n";
+          "Delete this channel from a category from below by typing the numbers splitted by commas ',': \n\n";
 
         for (let i = 0; i < allCategories.length; i++) {
           promptMessage += `${i}: ${allCategories[i]} \n`;

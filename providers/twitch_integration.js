@@ -1,5 +1,6 @@
 const tokenUri = "https://id.twitch.tv/oauth2/token";
 const liveChannelsUri = "https://api.twitch.tv/helix/streams";
+const usersDetailsUri = "https://api.twitch.tv/helix/users";
 
 // -----------------------------------------------------------------------
 
@@ -43,6 +44,28 @@ async function getLiveChannels(channels, token) {
   const env = await getEnvironmentVariables();
   const queryString = channels
     .map((name) => `user_login=${encodeURIComponent(name)}`)
+    .join("&");
+
+  const response = await fetch(`${liveChannelsUri}?${queryString}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Client-Id": env.CLIENT_ID,
+    },
+  });
+
+  const data = await response.json();
+  return data.data;
+}
+
+async function getChannelsAvatar(channels, token) {
+  if (!channels || channels.length === 0) {
+    return [];
+  }
+
+  const env = await getEnvironmentVariables();
+  const queryString = channels
+    .map((name) => `login=${encodeURIComponent(name)}`)
     .join("&");
 
   const response = await fetch(`${liveChannelsUri}?${queryString}`, {

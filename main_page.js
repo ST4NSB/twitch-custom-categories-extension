@@ -1,6 +1,12 @@
 async function main() {
   try {
-    renderDeleteCategorryButton();
+    //const allRegisteredChannels = await getAllChannels();
+    //const token = await getOAUTH2Token();
+    //const liveChannels = await getLiveChannels(allRegisteredChannels, token);
+    const liveChannels = [];
+    renderCategoryChannels(liveChannels);
+
+    renderDeleteCategoryButton();
     renderAddCategoryButton();
     const addCategoryButtonId = document.getElementById("addCustomCategory");
     const deleteCategoryButtonId = document.getElementById(
@@ -8,10 +14,18 @@ async function main() {
     );
 
     addCategoryButtonId.addEventListener("click", async function () {
-      const category = prompt(
-        "Please enter a custom category name: \n",
-        ""
-      ).trim();
+      const allCategories = await getCategories();
+      let promptMessage = "";
+      if (allCategories.length !== 0) {
+        promptMessage += "Existing Categories: \n\n";
+        for (let i = 0; i < allCategories.length; i++) {
+          promptMessage += `${i}: ${allCategories[i]}\n`;
+        }
+        promptMessage += "\n";
+      }
+      promptMessage += "Please enter a custom category name: \n";
+
+      const category = prompt(promptMessage, "").trim();
       if (!category || category === "") {
         throw new Error("Invalid category name!");
       }
@@ -32,7 +46,7 @@ async function main() {
 
       let categoriesDictionary = {};
       let promptMessage =
-        "Delete a category by typing the numbers splitted by comma ',': \n\n";
+        "Delete a category by typing the numbers splitted by commas ',': \n\n";
 
       for (let i = 0; i < allCategories.length; i++) {
         promptMessage += `${i}: ${allCategories[i]} \n`;

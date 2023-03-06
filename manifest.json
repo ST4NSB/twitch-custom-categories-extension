@@ -24,7 +24,8 @@
 			"js": [
 				"providers/storage.js",
 				"providers/twitch_integration.js",
-				"generators/html_generator.js",
+				"generators/buttons_html_generator.js",
+				"generators/mainpage_html_generator.js",
 				"main_page.js"
 			]
 		},
@@ -41,7 +42,7 @@
 			"js": [
 				"providers/storage.js",
 				"providers/twitch_integration.js",
-				"generators/html_generator.js",
+				"generators/buttons_html_generator.js",
 				"channel.js"
 			]
 		}
