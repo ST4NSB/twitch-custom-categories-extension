@@ -2,22 +2,23 @@ function createCategoryTitle(name) {
   return `<div class="Layout-sc-1xcs6mc-0 iGmZLW">
             <h2 class="CoreText-sc-1txzju1-0 ScTitleText-sc-d9mj2s-0 jKVhlu igzOaC tw-title">
               <span id="bdc1c6b6aa399e8d"
-                class="CoreText-sc-1txzju1-0 feJdGm">${name}
+                class="CoreText-sc-1txzju1-0 feJdGm">${name} channels
               </span>
             </h2>
           </div>`;
 }
 
-function createChannelDetailsModal(data) {
+function createChannelDetailsModal(category, data, hiddenClass) {
   let thumbnailBigger = data.thumbnail_url
     .replace("{width}", "440")
     .replace("{height}", "248");
 
   const convertedNumberOfViewers =
     (parseInt(data.viewer_count) / 1000).toFixed(1) + "k";
+  const limitTags = 3;
 
-  return `<div style="transition-property: transform, opacity; transition-timing-function: ease;"
-            class="ScTransitionBase-sc-hx4quq-0 bUHYlK tw-transition">
+  return `<div style="max-width: 20%; transition-property: transform, opacity; transition-timing-function: ease;"
+            class="ScTransitionBase-sc-hx4quq-0 bUHYlK tw-transition customTwitchCategory_${category} ${hiddenClass}">
               <div class="shelf-card__impression-wrapper">
                 <div data-test-selector="shelf-card-selector" class="Layout-sc-1xcs6mc-0 hFIrVr">
                   <article class="Layout-sc-1xcs6mc-0 guHXLE" data-ffz-type="live">
@@ -62,8 +63,9 @@ function createChannelDetailsModal(data) {
                           <div class="Layout-sc-1xcs6mc-0 BcKcx">
                           <div class="InjectLayout-sc-1i43xsx-0 hVPOSx">
                             ${data.tags
-                              .map(
-                                (tag) => `
+                              .map((tag, index) =>
+                                index < limitTags
+                                  ? `
                                   <div class="InjectLayout-sc-1i43xsx-0 koJRns"><a
                                           class="ScTag-sc-14s7ciu-0 bOVWlO tw-tag"
                                           aria-describedby="P9XHUIVkATUExnFgWYbjNpDEumxLEtlJ"
@@ -74,6 +76,7 @@ function createChannelDetailsModal(data) {
                                                   <span>${tag}</span></div>
                                           </div>
                                       </a></div>`
+                                  : ""
                               )
                               .join("")}
                             </div>
@@ -98,7 +101,7 @@ function createChannelDetailsModal(data) {
                       </div>
                     </div>
 
-                    <div class="ScWrapper-sc-1wvuch4-0 dWBixA tw-hover-accent-effect">
+                    <div class="ScWrapper-sc-1wvuch4-0 custom_colors tw-hover-accent-effect">
                       <div class="ScTransformWrapper-sc-1wvuch4-1 ScCornerTop-sc-1wvuch4-2 gEBqEV hPOElK">
                       </div>
                       <div
@@ -131,16 +134,6 @@ function createChannelDetailsModal(data) {
                                           ${convertedNumberOfViewers} viewers
                                       </div>
                                   </div>
-                                  <div class="ffz-uptime-element tw-absolute tw-right-0 tw-top-0 tw-mg-1">
-                                      <div class="tw-relative ffz-il-tooltip__container">
-                                          <div
-                                              class="tw-border-radius-small tw-c-background-overlay tw-c-text-overlay tw-flex tw-pd-x-05">
-                                              <div class="tw-flex tw-c-text-live">
-                                                  <figure class="ffz-i-clock"></figure>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
                               </div>
                           </a>
                         </div>
@@ -151,143 +144,42 @@ function createChannelDetailsModal(data) {
           </div>`;
 }
 
-function renderCategoryChannels(liveChannels) {
+function showMoreEvent(e) {
+  const category = e.target.closest("button").id;
+
+  // hide 'Show More' button area
+  const showMoreArea = document.getElementById(`showMore_${category}`);
+  showMoreArea.classList.add("hiddenArea");
+
+  // show more videos
+  const channels = document.querySelectorAll(
+    `.customTwitchCategory_${category}`
+  );
+
+  channels.forEach((elem) => elem.classList.remove("hiddenChannel"));
+}
+
+function renderCategoryChannels(category, liveChannels) {
   const referenceElement = document.querySelector(
     "#following-page-main-content > div:nth-child(1) > div:nth-child(1)"
   );
 
-  const channels = [
-    {
-      id: "48087320253",
-      user_id: "26301881",
-      user_login: "sodapoppin",
-      user_name: "sodapoppin",
-      game_id: "488190",
-      game_name: "Poker",
-      type: "live",
-      title:
-        "!acr Poker tournament time #ad and Elden Ring After| @ StarforgePCs | am dad",
-      viewer_count: 12714,
-      started_at: "2023-03-06T18:32:40Z",
-      language: "en",
-      thumbnail_url:
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_sodapoppin-{width}x{height}.jpg",
-      tag_ids: [],
-      tags: ["Anime", "Vtuber", "Furry", "Veteran", "English"],
-      is_mature: true,
-      profile_image_url:
-        "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
-    },
-    {
-      id: "48087320253",
-      user_id: "26301881",
-      user_login: "sodapoppin",
-      user_name: "sodapoppin",
-      game_id: "488190",
-      game_name: "Poker",
-      type: "live",
-      title:
-        "!acr Poker tournament time #ad and Elden Ring After| @ StarforgePCs | am dad",
-      viewer_count: 12714,
-      started_at: "2023-03-06T18:32:40Z",
-      language: "en",
-      thumbnail_url:
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_sodapoppin-{width}x{height}.jpg",
-      tag_ids: [],
-      tags: ["Anime", "Vtuber", "Furry", "Veteran", "English"],
-      is_mature: true,
-      profile_image_url:
-        "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
-    },
-    {
-      id: "40541694088",
-      user_id: "22484632",
-      user_login: "forsen",
-      user_name: "forsen",
-      game_id: "27471",
-      game_name: "Minecraft",
-      type: "live",
-      title: "Tune in to see the next part of my plan!",
-      viewer_count: 18278,
-      started_at: "2023-03-06T18:01:57Z",
-      language: "en",
-      thumbnail_url:
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_forsen-{width}x{height}.jpg",
-      tag_ids: [],
-      tags: ["English"],
-      is_mature: true,
-      profile_image_url:
-        "https://static-cdn.jtvnw.net/jtv_user_pictures/forsen-profile_image-48b43e1e4f54b5c8-300x300.png",
-    },
-    {
-      id: "40541694088",
-      user_id: "22484632",
-      user_login: "forsen",
-      user_name: "forsen",
-      game_id: "27471",
-      game_name: "Minecraft",
-      type: "live",
-      title: "Tune in to see the next part of my plan!",
-      viewer_count: 18278,
-      started_at: "2023-03-06T18:01:57Z",
-      language: "en",
-      thumbnail_url:
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_forsen-{width}x{height}.jpg",
-      tag_ids: [],
-      tags: ["English"],
-      is_mature: true,
-      profile_image_url:
-        "https://static-cdn.jtvnw.net/jtv_user_pictures/forsen-profile_image-48b43e1e4f54b5c8-300x300.png",
-    },
-    {
-      id: "40541694088",
-      user_id: "22484632",
-      user_login: "forsen",
-      user_name: "forsen",
-      game_id: "27471",
-      game_name: "Minecraft",
-      type: "live",
-      title: "Tune in to see the next part of my plan!",
-      viewer_count: 18278,
-      started_at: "2023-03-06T18:01:57Z",
-      language: "en",
-      thumbnail_url:
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_forsen-{width}x{height}.jpg",
-      tag_ids: [],
-      tags: ["English"],
-      is_mature: true,
-      profile_image_url:
-        "https://static-cdn.jtvnw.net/jtv_user_pictures/forsen-profile_image-48b43e1e4f54b5c8-300x300.png",
-    },
-    {
-      id: "40541694088",
-      user_id: "22484632",
-      user_login: "forsen",
-      user_name: "forsen",
-      game_id: "27471",
-      game_name: "Minecraft",
-      type: "live",
-      title: "Tune in to see the next part of my plan!",
-      viewer_count: 18278,
-      started_at: "2023-03-06T18:01:57Z",
-      language: "en",
-      thumbnail_url:
-        "https://static-cdn.jtvnw.net/previews-ttv/live_user_forsen-{width}x{height}.jpg",
-      tag_ids: [],
-      tags: ["English"],
-      is_mature: true,
-      profile_image_url:
-        "https://static-cdn.jtvnw.net/jtv_user_pictures/forsen-profile_image-48b43e1e4f54b5c8-300x300.png",
-    },
-  ];
-
   const htmlToInsert = `
+    <div>
     <div class="Layout-sc-1xcs6mc-0 bZVrjx find-me">
-      ${createCategoryTitle("Test Category")}
+      ${createCategoryTitle(category)}
       <div aria-labelledby="b6eb5fd44b1b1bee">
         <div class="InjectLayout-sc-1i43xsx-0 eptOJT tw-transition-group">
           <div class="ScTower-sc-1sjzzes-0 czzjEE tw-tower">
-            ${channels.map((x) => createChannelDetailsModal(x)).join("")}
+            ${liveChannels
+              .map((x, i) =>
+                createChannelDetailsModal(
+                  category,
+                  x,
+                  i >= 5 ? "hiddenChannel" : ""
+                )
+              )
+              .join("")}
           </div>
         </div>
           <div>
@@ -295,28 +187,35 @@ function renderCategoryChannels(liveChannels) {
                   <div class="Layout-sc-1xcs6mc-0 budyCR">
                       <div class="Layout-sc-1xcs6mc-0 dNDhLW show-more__line"></div>
                   </div>
-                  <div class="Layout-sc-1xcs6mc-0 eajNuk"><button
-                          class="ScCoreButton-sc-ocjdkq-0 ScCoreButtonText-sc-ocjdkq-3 ibtYyW jYfhUy">
-                          <div class="ScCoreButtonLabel-sc-s7h2b7-0 kHQqnO">
-                              <div data-a-target="tw-core-button-label-text" class="Layout-sc-1xcs6mc-0 phMMp">
-                                  <div class="Layout-sc-1xcs6mc-0 bTJhJp">
-                                      <div class="Layout-sc-1xcs6mc-0 byLNWv">
-                                          <p aria-label="Show more" class="CoreText-sc-1txzju1-0">Show more</p>
+                  ${
+                    liveChannels.length > 5
+                      ? `<div id="showMore_${category}" class="Layout-sc-1xcs6mc-0 eajNuk">
+                            <button id="${category}"
+                                  class="ScCoreButton-sc-ocjdkq-0 showMoreBttn ScCoreButtonText-sc-ocjdkq-3 ibtYyW jYfhUy">
+                                  <div class="ScCoreButtonLabel-sc-s7h2b7-0 kHQqnO">
+                                      <div data-a-target="tw-core-button-label-text" class="Layout-sc-1xcs6mc-0 phMMp">
+                                          <div class="Layout-sc-1xcs6mc-0 bTJhJp">
+                                              <div class="Layout-sc-1xcs6mc-0 byLNWv">
+                                                  <p aria-label="Show more" class="CoreText-sc-1txzju1-0">Show more</p>
+                                              </div>
+                                              <figure class="ScFigure-sc-a7mori-0 gJgjXg tw-svg"><svg width="2rem" height="2rem"
+                                                      viewBox="0 0 20 20" fill="currentColor">
+                                                      <path d="M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z"></path>
+                                                  </svg></figure>
+                                          </div>
                                       </div>
-                                      <figure class="ScFigure-sc-a7mori-0 gJgjXg tw-svg"><svg width="2rem" height="2rem"
-                                              viewBox="0 0 20 20" fill="currentColor">
-                                              <path d="M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z"></path>
-                                          </svg></figure>
                                   </div>
-                              </div>
-                          </div>
-                      </button></div>
+                              </button>
+                          </div>`
+                      : ""
+                  }
                 <div class="Layout-sc-1xcs6mc-0 budyCR">
                 <div class="Layout-sc-1xcs6mc-0 dNDhLW show-more__line"></div>
                   </div>
               </div>
           </div>
       </div>
+    </div>
     </div>`;
   referenceElement.insertAdjacentHTML("afterend", htmlToInsert);
 }

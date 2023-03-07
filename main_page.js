@@ -3,19 +3,147 @@ async function main() {
     //const allRegisteredChannels = await getAllChannels();
     //const token = await getOAUTH2Token();
     //const liveChannels = await getLiveChannels(allRegisteredChannels, token);
-    const liveChannels = [];
-    //renderCategoryChannels(liveChannels);
-
-    // chrome.storage.local.set({ exampleKey: "exampleValue" }, function () {
-    //   console.log('Value of exampleKey set to "exampleValue"');
-    // });
-
-    // // Get the value of the 'exampleKey' key
-    // chrome.storage.local.get("exampleKey", function (result) {
-    //   console.log("Value of exampleKey is:", result.exampleKey);
-    // });
-
-    //console.log("da, ", await getData());
+    const channels = [
+      {
+        id: "40543496664",
+        user_id: "48201326",
+        user_login: "missmikkaa",
+        user_name: "MissMikkaa",
+        game_id: "512953",
+        game_name: "ELDEN RING",
+        type: "live",
+        title:
+          "LVL 1 NAKED & Only Club Run | @MissMikkaa on socials | NEW EMOTE mikkaaUwU",
+        viewer_count: 2527,
+        started_at: "2023-03-07T13:47:04Z",
+        language: "en",
+        thumbnail_url:
+          "https://static-cdn.jtvnw.net/previews-ttv/live_user_missmikkaa-{width}x{height}.jpg",
+        tag_ids: [],
+        tags: [
+          "ADHD",
+          "Chatty",
+          "Woman",
+          "Interactive",
+          "Girl",
+          "Swedish",
+          "Sweden",
+          "English",
+          "Challenge",
+          "HardMode",
+        ],
+        is_mature: false,
+        profile_image_url:
+          "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
+      },
+      {
+        id: "48087320253",
+        user_id: "26301881",
+        user_login: "sodapoppin",
+        user_name: "sodapoppin",
+        game_id: "488190",
+        game_name: "Poker",
+        type: "live",
+        title:
+          "!acr Poker tournament time #ad and Elden Ring After| @ StarforgePCs | am dad",
+        viewer_count: 12714,
+        started_at: "2023-03-06T18:32:40Z",
+        language: "en",
+        thumbnail_url:
+          "https://static-cdn.jtvnw.net/previews-ttv/live_user_sodapoppin-{width}x{height}.jpg",
+        tag_ids: [],
+        tags: ["Anime", "Vtuber", "Furry", "Veteran", "English"],
+        is_mature: true,
+        profile_image_url:
+          "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
+      },
+      {
+        id: "48087320253",
+        user_id: "26301881",
+        user_login: "sodapoppin",
+        user_name: "sodapoppin",
+        game_id: "488190",
+        game_name: "Poker",
+        type: "live",
+        title:
+          "!acr Poker tournament time #ad and Elden Ring After| @ StarforgePCs | am dad",
+        viewer_count: 12714,
+        started_at: "2023-03-06T18:32:40Z",
+        language: "en",
+        thumbnail_url:
+          "https://static-cdn.jtvnw.net/previews-ttv/live_user_sodapoppin-{width}x{height}.jpg",
+        tag_ids: [],
+        tags: ["Anime", "Vtuber", "Furry", "Veteran", "English"],
+        is_mature: true,
+        profile_image_url:
+          "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
+      },
+      {
+        id: "48087320253",
+        user_id: "26301881",
+        user_login: "sodapoppin",
+        user_name: "sodapoppin",
+        game_id: "488190",
+        game_name: "Poker",
+        type: "live",
+        title:
+          "!acr Poker tournament time #ad and Elden Ring After| @ StarforgePCs | am dad",
+        viewer_count: 12714,
+        started_at: "2023-03-06T18:32:40Z",
+        language: "en",
+        thumbnail_url:
+          "https://static-cdn.jtvnw.net/previews-ttv/live_user_sodapoppin-{width}x{height}.jpg",
+        tag_ids: [],
+        tags: ["Anime", "Vtuber", "Furry", "Veteran", "English"],
+        is_mature: true,
+        profile_image_url:
+          "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
+      },
+      {
+        id: "48087320253",
+        user_id: "26301881",
+        user_login: "sodapoppin",
+        user_name: "sodapoppin",
+        game_id: "488190",
+        game_name: "Poker",
+        type: "live",
+        title:
+          "!acr Poker tournament time #ad and Elden Ring After| @ StarforgePCs | am dad",
+        viewer_count: 12714,
+        started_at: "2023-03-06T18:32:40Z",
+        language: "en",
+        thumbnail_url:
+          "https://static-cdn.jtvnw.net/previews-ttv/live_user_sodapoppin-{width}x{height}.jpg",
+        tag_ids: [],
+        tags: ["Anime", "Vtuber", "Furry", "Veteran", "English"],
+        is_mature: true,
+        profile_image_url:
+          "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
+      },
+      {
+        id: "48087320253",
+        user_id: "26301881",
+        user_login: "sodapoppin",
+        user_name: "sodapoppin",
+        game_id: "488190",
+        game_name: "Poker",
+        type: "live",
+        title:
+          "!acr Poker tournament time #ad and Elden Ring After| @ StarforgePCs | am dad",
+        viewer_count: 12714,
+        started_at: "2023-03-06T18:32:40Z",
+        language: "en",
+        thumbnail_url:
+          "https://static-cdn.jtvnw.net/previews-ttv/live_user_sodapoppin-{width}x{height}.jpg",
+        tag_ids: [],
+        tags: ["Anime", "Vtuber", "Furry", "Veteran", "English"],
+        is_mature: true,
+        profile_image_url:
+          "https://static-cdn.jtvnw.net/jtv_user_pictures/fc7b15b2-e400-4e74-8c8b-2ad3725e5770-profile_image-300x300.png",
+      },
+    ];
+    renderCategoryChannels("TEST", channels);
+    renderCategoryChannels("Cat2", channels);
 
     renderDeleteCategoryButton();
     renderAddCategoryButton();
@@ -23,6 +151,12 @@ async function main() {
     const deleteCategoryButtonId = document.getElementById(
       "deleteCustomCategory"
     );
+    const showMoreButtonsClass = document.querySelectorAll(
+      "button.showMoreBttn"
+    );
+    showMoreButtonsClass.forEach((button) => {
+      button.addEventListener("click", showMoreEvent);
+    });
 
     addCategoryButtonId.addEventListener("click", async function () {
       const allCategories = await getCategories();
@@ -91,4 +225,6 @@ async function main() {
   }
 }
 
-main();
+window.onload = function () {
+  main();
+};

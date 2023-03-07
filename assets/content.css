@@ -1,0 +1,8 @@
+.hiddenChannel, .hiddenArea {
+    display: none;
+}
+
+.custom_colors {
+    position: relative;
+    --color-accent: #9147FF;
+}
