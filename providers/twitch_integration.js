@@ -5,7 +5,7 @@ const usersDetailsUri = "https://api.twitch.tv/helix/users";
 // -----------------------------------------------------------------------
 
 async function getEnvironmentVariables() {
-  const response = await fetch(browser.runtime.getURL(".env"));
+  const response = await fetch(chrome.runtime.getURL(".env"));
   const text = await response.text();
   const env = Object.fromEntries(
     text.split("\r\n").map((line) => line.split("="))

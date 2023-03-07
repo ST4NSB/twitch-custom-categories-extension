@@ -4,7 +4,18 @@ async function main() {
     //const token = await getOAUTH2Token();
     //const liveChannels = await getLiveChannels(allRegisteredChannels, token);
     const liveChannels = [];
-    renderCategoryChannels(liveChannels);
+    //renderCategoryChannels(liveChannels);
+
+    // chrome.storage.local.set({ exampleKey: "exampleValue" }, function () {
+    //   console.log('Value of exampleKey set to "exampleValue"');
+    // });
+
+    // // Get the value of the 'exampleKey' key
+    // chrome.storage.local.get("exampleKey", function (result) {
+    //   console.log("Value of exampleKey is:", result.exampleKey);
+    // });
+
+    //console.log("da, ", await getData());
 
     renderDeleteCategoryButton();
     renderAddCategoryButton();

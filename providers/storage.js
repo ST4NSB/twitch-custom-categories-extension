@@ -1,6 +1,13 @@
 async function getCategories() {
-  const data = await browser.storage.local.get("categories");
-  return data.categories || [];
+  return new Promise(function (resolve, reject) {
+    chrome.storage.local.get("categories", function (result) {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(result.categories || []);
+      }
+    });
+  });
 }
 
 async function doesCategoryExist(category) {
@@ -20,7 +27,13 @@ async function addCategory(category) {
 
   const categories = await getCategories();
   const allCategories = [...categories, category];
-  browser.storage.local.set({ categories: allCategories }, function () {});
+  chrome.storage.local.set({ categories: allCategories }, function () {
+    if (chrome.runtime.lastError) {
+      console.error(chrome.runtime.lastError);
+    } else {
+      console.log("Categories saved successfully!");
+    }
+  });
 }
 
 async function deleteCategory(category) {
@@ -31,15 +44,22 @@ async function deleteCategory(category) {
 
   const categories = await getCategories();
   const categoriesLeft = categories.filter((x) => x !== category);
-  browser.storage.local.set({ categories: categoriesLeft }, function () {});
-  browser.storage.local.remove([category], function () {});
+  chrome.storage.local.set({ categories: categoriesLeft }, function () {});
+  chrome.storage.local.remove([category], function () {});
 }
 
 // -----------------------------------------------------------------------
 
 async function getChannelsInCategory(category) {
-  const data = await browser.storage.local.get([category]);
-  return data[category] || [];
+  return new Promise(function (resolve, reject) {
+    chrome.storage.local.get([category], function (result) {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(result[category] || []);
+      }
+    });
+  });
 }
 
 async function isChannelInCategory(channel, category) {
@@ -59,7 +79,7 @@ async function addChannelToCategory(channel, category) {
 
   const channels = await getChannelsInCategory(category);
   const allChannels = [...channels, channel];
-  browser.storage.local.set({ [category]: allChannels }, function () {});
+  chrome.storage.local.set({ [category]: allChannels }, function () {});
 }
 
 async function deleteChannel(channel, category) {
@@ -70,7 +90,7 @@ async function deleteChannel(channel, category) {
 
   const channels = await getChannelsInCategory(category);
   const channelsLeft = channels.filter((x) => x !== channel);
-  browser.storage.local.set({ [category]: channelsLeft }, function () {});
+  chrome.storage.local.set({ [category]: channelsLeft }, function () {});
 }
 
 // -----------------------------------------------------------------------
