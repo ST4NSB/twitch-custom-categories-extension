@@ -18,6 +18,10 @@ async function getLiveChannelsInEveryCategory() {
     }
   }
 
+  for (let category in formattedData) {
+    formattedData[category].sort((a, b) => b.viewer_count - a.viewer_count);
+  }
+
   return formattedData;
 }
 

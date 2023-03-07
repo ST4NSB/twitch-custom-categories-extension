@@ -9,13 +9,15 @@ function createCategoryTitle(name) {
 }
 
 function createChannelDetailsModal(category, data, hiddenClass) {
+  const limitTags = 3;
   let thumbnailBigger = data.thumbnail_url
     .replace("{width}", "440")
     .replace("{height}", "248");
 
   const convertedNumberOfViewers =
-    (parseInt(data.viewer_count) / 1000).toFixed(1) + "k";
-  const limitTags = 3;
+    data.viewer_count >= 1000
+      ? (data.viewer_count / 1000).toFixed(1) + "k"
+      : data.viewer_count;
 
   return `<div style="max-width: 20%; transition-property: transform, opacity; transition-timing-function: ease;"
             class="ScTransitionBase-sc-hx4quq-0 bUHYlK tw-transition customTwitchCategory_${category} ${hiddenClass}">
