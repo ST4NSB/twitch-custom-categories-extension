@@ -6,6 +6,10 @@ async function main() {
 
     const liveChannelsInEveryCategory = await getLiveChannelsInEveryCategory();
     for (let category in liveChannelsInEveryCategory) {
+      console.log(category);
+      if (liveChannelsInEveryCategory[category].length === 0) {
+        continue;
+      }
       renderCategoryChannels(category, liveChannelsInEveryCategory[category]);
     }
 
@@ -110,7 +114,13 @@ async function getLiveChannelsInEveryCategory() {
     formattedData[category].sort((a, b) => b.viewer_count - a.viewer_count);
   }
 
-  return formattedData;
+  const reversedKeys = Object.keys(formattedData).reverse();
+  const reversedObj = {};
+  for (const key of reversedKeys) {
+    reversedObj[key] = formattedData[key];
+  }
+
+  return reversedObj;
 }
 
 window.onload = function () {
