@@ -58,7 +58,7 @@ async function getLiveChannels(channels, token) {
   return data.data;
 }
 
-async function getChannelsAvatar(channels, token) {
+async function getChannelsDetails(channels, token) {
   if (!channels || channels.length === 0) {
     return [];
   }
@@ -68,7 +68,7 @@ async function getChannelsAvatar(channels, token) {
     .map((name) => `login=${encodeURIComponent(name)}`)
     .join("&");
 
-  const response = await fetch(`${liveChannelsUri}?${queryString}`, {
+  const response = await fetch(`${usersDetailsUri}?${queryString}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -78,4 +78,32 @@ async function getChannelsAvatar(channels, token) {
 
   const data = await response.json();
   return data.data;
+}
+
+// -----------------------------------------------------------------------
+
+async function getFullDetailsLiveChannels(allRegisteredChannels) {
+  const token = await getOAUTH2Token();
+  const liveChannels = await getLiveChannels(allRegisteredChannels, token);
+  const channelsDetails = await getChannelsDetails(
+    allRegisteredChannels,
+    token
+  );
+
+  const liveChannelsDict = {};
+  for (let i = 0; i < liveChannels.length; i++) {
+    for (let j = 0; j < channelsDetails.length; j++) {
+      if (liveChannels[i].user_login === channelsDetails[j].login) {
+        let profileImage = channelsDetails[j].profile_image_url;
+        let liveChannelData = {
+          ...liveChannels[i],
+          profile_image_url: profileImage,
+        };
+        liveChannelsDict[liveChannelData.user_name] = liveChannelData;
+        break;
+      }
+    }
+  }
+
+  return liveChannelsDict;
 }
