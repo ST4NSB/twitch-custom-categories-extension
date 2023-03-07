@@ -6,7 +6,6 @@ async function main() {
 
     const liveChannelsInEveryCategory = await getLiveChannelsInEveryCategory();
     for (let category in liveChannelsInEveryCategory) {
-      console.log(category);
       if (liveChannelsInEveryCategory[category].length === 0) {
         continue;
       }

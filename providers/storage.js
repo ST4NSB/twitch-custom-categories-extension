@@ -27,13 +27,7 @@ async function addCategory(category) {
 
   const categories = await getCategories();
   const allCategories = [...categories, category];
-  chrome.storage.local.set({ categories: allCategories }, function () {
-    if (chrome.runtime.lastError) {
-      console.error(chrome.runtime.lastError);
-    } else {
-      console.log("Categories saved successfully!");
-    }
-  });
+  chrome.storage.local.set({ categories: allCategories }, function () {});
 }
 
 async function deleteCategory(category) {
