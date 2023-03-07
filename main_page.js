@@ -1,32 +1,6 @@
-async function getLiveChannelsInEveryCategory() {
-  const allRegisteredChannels = await getAllChannels();
-  const liveChannels = await getFullDetailsLiveChannels(allRegisteredChannels);
-  const categories = await getCategories();
-
-  let formattedData = {};
-  for (let c = 0; c < categories.length; c++) {
-    let category = categories[c];
-    formattedData = { ...formattedData, [category]: [] };
-
-    let registeredChannelsForCategory = await getChannelsInCategory(category);
-    for (let i = 0; i < registeredChannelsForCategory.length; i++) {
-      let channelName = registeredChannelsForCategory[i];
-      let liveChannelData = liveChannels[channelName];
-      if (liveChannelData) {
-        formattedData[category] = [...formattedData[category], liveChannelData];
-      }
-    }
-  }
-
-  for (let category in formattedData) {
-    formattedData[category].sort((a, b) => b.viewer_count - a.viewer_count);
-  }
-
-  return formattedData;
-}
-
 async function main() {
   try {
+    renderDebugButtonAndEventListeners();
     renderDeleteCategoryButton();
     renderAddCategoryButton();
 
@@ -110,6 +84,33 @@ async function main() {
     console.log(msg);
     alert(msg);
   }
+}
+
+async function getLiveChannelsInEveryCategory() {
+  const allRegisteredChannels = await getAllChannels();
+  const liveChannels = await getFullDetailsLiveChannels(allRegisteredChannels);
+  const categories = await getCategories();
+
+  let formattedData = {};
+  for (let c = 0; c < categories.length; c++) {
+    let category = categories[c];
+    formattedData = { ...formattedData, [category]: [] };
+
+    let registeredChannelsForCategory = await getChannelsInCategory(category);
+    for (let i = 0; i < registeredChannelsForCategory.length; i++) {
+      let channelName = registeredChannelsForCategory[i];
+      let liveChannelData = liveChannels[channelName];
+      if (liveChannelData) {
+        formattedData[category] = [...formattedData[category], liveChannelData];
+      }
+    }
+  }
+
+  for (let category in formattedData) {
+    formattedData[category].sort((a, b) => b.viewer_count - a.viewer_count);
+  }
+
+  return formattedData;
 }
 
 window.onload = function () {

@@ -26,6 +26,7 @@
 				"providers/twitch_integration.js",
 				"generators/buttons_html_generator.js",
 				"generators/mainpage_html_generator.js",
+				"common.js",
 				"main_page.js"
 			]
 		},
@@ -43,6 +44,7 @@
 				"providers/storage.js",
 				"providers/twitch_integration.js",
 				"generators/buttons_html_generator.js",
+				"common.js",
 				"channel.js"
 			]
 		}

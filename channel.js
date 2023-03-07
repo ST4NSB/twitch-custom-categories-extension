@@ -1,5 +1,6 @@
 async function main() {
   try {
+    renderDebugButtonAndEventListeners();
     renderDeleteChannelFromCategoryButton();
     renderAddChannelToCategoryButton();
     const addChannelToCategoryButtonId = document.getElementById(
