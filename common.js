@@ -151,15 +151,20 @@ function renderDeleteChannelFromCategoryButtonAndEventListeners() {
     "click",
     async function () {
       let channelName = document.querySelector(
-        "h1.CoreText-sc-1txzju1-0"
-      ).innerHTML;
+        "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.tNDkq"
+      )?.innerHTML;
+
+      if (!channelName) {
+        return alert(
+          "Couldn't find this channel's username, please access a channel at twitch.tv/{channel_name}"
+        );
+      }
 
       const allCategories = await getCategoriesContainingChannel(channelName);
       if (allCategories.length === 0) {
-        alert(
+        return alert(
           "There are NO existing categories for this channel! Add a category first!"
         );
-        return;
       }
 
       let categoriesDictionary = {};
@@ -199,15 +204,19 @@ function renderAddChannelToCategoryButtonAndEventListeners() {
     "addChannelToCategory"
   );
   addChannelToCategoryButtonId.addEventListener("click", async function () {
+    let channelName = document.querySelector(
+      "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.tNDkq"
+    )?.innerHTML;
+
+    if (!channelName) {
+      return alert(
+        "Couldn't find this channel's username, please access a channel at twitch.tv/{channel_name}"
+      );
+    }
     const allCategories = await getCategories();
     if (allCategories.length === 0) {
-      alert("There are NO existing categories! Add a category first!");
-      return;
+      return alert("There are NO existing categories! Add a category first!");
     }
-
-    let channelName = document.querySelector(
-      "h1.CoreText-sc-1txzju1-0"
-    ).innerHTML;
 
     let categoriesDictionary = {};
     let promptMessage =
