@@ -1,3 +1,56 @@
+let oldPageUrl = "";
+const mainPagePath = "/directory/following";
+
+// -----------------------------------------------------------------------
+
+async function getLiveChannelsInEveryCategory() {
+  const allRegisteredChannels = await getAllChannels();
+  const liveChannels = await getFullDetailsLiveChannels(allRegisteredChannels);
+  const categories = await getCategories();
+
+  let formattedData = {};
+  for (let c = 0; c < categories.length; c++) {
+    let category = categories[c];
+    formattedData = { ...formattedData, [category]: [] };
+
+    let registeredChannelsForCategory = await getChannelsInCategory(category);
+    for (let i = 0; i < registeredChannelsForCategory.length; i++) {
+      let channelName = registeredChannelsForCategory[i];
+      let liveChannelData = liveChannels[channelName];
+      if (liveChannelData) {
+        formattedData[category] = [...formattedData[category], liveChannelData];
+      }
+    }
+  }
+
+  for (let category in formattedData) {
+    formattedData[category].sort((a, b) => b.viewer_count - a.viewer_count);
+  }
+
+  const reversedKeys = Object.keys(formattedData).reverse();
+  const reversedObj = {};
+  for (const key of reversedKeys) {
+    reversedObj[key] = formattedData[key];
+  }
+
+  return reversedObj;
+}
+
+async function renderLiveChannels() {
+  const liveChannelsInEveryCategory = await getLiveChannelsInEveryCategory();
+  for (let category in liveChannelsInEveryCategory) {
+    if (liveChannelsInEveryCategory[category].length === 0) {
+      continue;
+    }
+    renderCategoryChannels(category, liveChannelsInEveryCategory[category]);
+  }
+
+  const showMoreButtonsClass = document.querySelectorAll("button.showMoreBttn");
+  showMoreButtonsClass.forEach((button) => {
+    button.addEventListener("click", showMoreEvent);
+  });
+}
+
 function renderDebugButtonAndEventListeners() {
   renderDebugButton();
 
@@ -18,4 +71,201 @@ function renderDebugButtonAndEventListeners() {
     console.log(debugMessage);
     alert(debugMessage);
   });
+}
+
+function renderAddCategoryButtonAndEventListeners() {
+  renderAddCategoryButton();
+  const addCategoryButtonId = document.getElementById("addCustomCategory");
+  addCategoryButtonId.addEventListener("click", async function () {
+    const allCategories = await getCategories();
+    let promptMessage = "";
+    if (allCategories.length !== 0) {
+      promptMessage += "Existing Categories: \n\n";
+      for (let i = 0; i < allCategories.length; i++) {
+        promptMessage += `${i}: ${allCategories[i]}\n`;
+      }
+      promptMessage += "\n";
+    }
+    promptMessage += "Please enter a custom category name: \n";
+
+    const category = prompt(promptMessage, "").trim();
+    if (!category || category === "") {
+      throw new Error("Invalid category name!");
+    }
+
+    await addCategory(category);
+    console.log(
+      "Twitch Custom Categories - storage categories:",
+      await getCategories()
+    );
+  });
+}
+
+function renderDeleteCategoryButtonAndEventListeners() {
+  renderDeleteCategoryButton();
+  const deleteCategoryButtonId = document.getElementById(
+    "deleteCustomCategory"
+  );
+  deleteCategoryButtonId.addEventListener("click", async function () {
+    const allCategories = await getCategories();
+    if (allCategories.length === 0) {
+      alert("There are NO existing categories!");
+      return;
+    }
+
+    let categoriesDictionary = {};
+    let promptMessage =
+      "Delete a category by typing the numbers splitted by commas ',': \n\n";
+
+    for (let i = 0; i < allCategories.length; i++) {
+      promptMessage += `${i}: ${allCategories[i]} \n`;
+      categoriesDictionary[i] = allCategories[i];
+    }
+    promptMessage += "\n";
+
+    const categories = prompt(promptMessage, "").trim().split(",").map(Number);
+    if (!categories || categories === "") {
+      throw new Error("Invalid categories!");
+    }
+
+    for (let i = 0; i < categories.length; i++) {
+      let number = categories[i];
+      let category = categoriesDictionary[number];
+      await deleteCategory(category);
+    }
+
+    console.log(
+      "Twitch Custom Categories - storage categories:",
+      await getCategories()
+    );
+  });
+}
+
+function renderDeleteChannelFromCategoryButtonAndEventListeners() {
+  renderDeleteChannelFromCategoryButton();
+
+  const deleteChannelFromCategoryButtonId = document.getElementById(
+    "deleteChannelFromCategory"
+  );
+  deleteChannelFromCategoryButtonId.addEventListener(
+    "click",
+    async function () {
+      let channelName = document.querySelector(
+        "h1.CoreText-sc-1txzju1-0"
+      ).innerHTML;
+
+      const allCategories = await getCategoriesContainingChannel(channelName);
+      if (allCategories.length === 0) {
+        alert(
+          "There are NO existing categories for this channel! Add a category first!"
+        );
+        return;
+      }
+
+      let categoriesDictionary = {};
+      let promptMessage =
+        "Delete this channel from a category from below by typing the numbers splitted by commas ',': \n\n";
+
+      for (let i = 0; i < allCategories.length; i++) {
+        promptMessage += `${i}: ${allCategories[i]} \n`;
+        categoriesDictionary[i] = allCategories[i];
+      }
+      promptMessage += "\n";
+
+      const categories = prompt(promptMessage, "")
+        .trim()
+        .split(",")
+        .map(Number);
+      if (!categories || categories === "") {
+        throw new Error("Invalid categories!");
+      }
+
+      for (let i = 0; i < categories.length; i++) {
+        let number = categories[i];
+        let category = categoriesDictionary[number];
+        await deleteChannel(channelName, category);
+        console.log(
+          `Twitch Custom Categories - all users in category ${category}: `,
+          await getChannelsInCategory(category)
+        );
+      }
+    }
+  );
+}
+
+function renderAddChannelToCategoryButtonAndEventListeners() {
+  renderAddChannelToCategoryButton();
+  const addChannelToCategoryButtonId = document.getElementById(
+    "addChannelToCategory"
+  );
+  addChannelToCategoryButtonId.addEventListener("click", async function () {
+    const allCategories = await getCategories();
+    if (allCategories.length === 0) {
+      alert("There are NO existing categories! Add a category first!");
+      return;
+    }
+
+    let channelName = document.querySelector(
+      "h1.CoreText-sc-1txzju1-0"
+    ).innerHTML;
+
+    let categoriesDictionary = {};
+    let promptMessage =
+      "Add this channel to a category by typing the numbers splitted by commas ','\nExisting categories:\n\n";
+
+    for (let i = 0; i < allCategories.length; i++) {
+      promptMessage += `${i}: ${allCategories[i]} \n`;
+      categoriesDictionary[i] = allCategories[i];
+    }
+    promptMessage += "\n";
+
+    const categories = prompt(promptMessage, "").trim().split(",").map(Number);
+    if (!categories || categories === "") {
+      throw new Error("Invalid categories!");
+    }
+
+    for (let i = 0; i < categories.length; i++) {
+      let number = categories[i];
+      let category = categoriesDictionary[number];
+      await addChannelToCategory(channelName, category);
+      console.log(
+        `Twitch Custom Categories - all users in category ${category}: `,
+        await getChannelsInCategory(category)
+      );
+    }
+  });
+}
+
+async function showContentBasedOnPage(currentPageUrl) {
+  if (currentPageUrl.endsWith(mainPagePath)) {
+    document.querySelector("#addCustomCategory").style.display = "block";
+    document.querySelector("#deleteCustomCategory").style.display = "block";
+    document.querySelector("#addChannelToCategory").style.display = "none";
+    document.querySelector("#deleteChannelFromCategory").style.display = "none";
+
+    await renderLiveChannels();
+  } else {
+    document.querySelector("#addCustomCategory").style.display = "none";
+    document.querySelector("#deleteCustomCategory").style.display = "none";
+    document.querySelector("#addChannelToCategory").style.display = "block";
+    document.querySelector("#deleteChannelFromCategory").style.display =
+      "block";
+  }
+}
+
+function createMutationObserver() {
+  const observer = new MutationObserver(async (mutationsList, observer) => {
+    const currentPageUrl = window.location.href;
+    if (oldPageUrl !== currentPageUrl) {
+      oldPageUrl = currentPageUrl;
+      await showContentBasedOnPage(currentPageUrl);
+    }
+  });
+
+  const observerConfig = {
+    childList: true,
+    subtree: true,
+  };
+
+  observer.observe(document.documentElement, observerConfig);
 }
