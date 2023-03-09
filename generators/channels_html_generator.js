@@ -277,7 +277,7 @@ async function renameEvent(e) {
   await renameCategory(oldCategory, newCategory);
 }
 
-async function moveCategoryToTop(e) {
+async function moveCategoryToTopEvent(e) {
   const buttonRef = e.target.closest("button");
   const category = buttonRef.id.replace("movetotop_", "");
 

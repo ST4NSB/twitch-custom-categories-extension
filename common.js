@@ -59,7 +59,7 @@ async function renderLiveChannels() {
     "button.moveToTopButton"
   );
   moveToTopButtonsClass.forEach((button) => {
-    button.addEventListener("click", moveCategoryToTop);
+    button.addEventListener("click", moveCategoryToTopEvent);
   });
 }
 
