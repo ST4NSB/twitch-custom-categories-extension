@@ -10,6 +10,13 @@ async function getCategories() {
   });
 }
 
+async function moveCategoryToFront(category) {
+  const categories = await getCategories();
+  const filteredCategories = categories.filter((x) => x !== category);
+  const newOrderCategories = [category, ...filteredCategories];
+  chrome.storage.local.set({ categories: newOrderCategories }, function () {});
+}
+
 async function doesCategoryExist(category) {
   const categories = await getCategories();
   if (categories.includes(category)) {
@@ -113,4 +120,14 @@ async function getCategoriesContainingChannel(channel) {
   }
 
   return assignedCategories;
+}
+
+async function renameCategory(oldCategory, newCategory) {
+  const channels = await getChannelsInCategory(oldCategory);
+  await deleteCategory(oldCategory);
+  await addCategory(newCategory);
+
+  for (let i = 0; i < channels.length; i++) {
+    await addChannelToCategory(channels[i], newCategory);
+  }
 }

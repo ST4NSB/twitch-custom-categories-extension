@@ -1,10 +1,24 @@
 function createCategoryTitle(name) {
-  return `<div class="Layout-sc-1xcs6mc-0 iGmZLW">
+  return `<div class="Layout-sc-1xcs6mc-0 mainTitleClass">
             <h2 class="CoreText-sc-1txzju1-0 ScTitleText-sc-d9mj2s-0 jKVhlu igzOaC tw-title">
-              <span id="bdc1c6b6aa399e8d"
-                class="CoreText-sc-1txzju1-0 feJdGm">${name} channels
-              </span>
+              <span id="bdc1c6b6aa399e8d" class="CoreText-sc-1txzju1-0 feJdGm">${name} channels</span>
             </h2>
+            <button id="rename_${name}" title="Edit this category name" class="renameButton icon-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                  fill="white"
+                  d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.8 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
+                </svg>
+            </button>
+            <button id="movetotop_${name}" title="Move this category to the top" class="moveToTopButton icon-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <path
+                  fill="white"
+                  d="M318 177.5c3.8-8.8 2-19-4.6-26l-136-144C172.9 2.7 166.6 0 160 0s-12.9 2.7-17.4 7.5l-136 144c-6.6 7-8.4 17.2-4.6 26S14.4 192 24 192H96l0 288c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32l0-288h72c9.6 0 18.2-5.7 22-14.5z" />
+                </svg>
+            </button>
           </div>`;
 }
 
@@ -20,7 +34,7 @@ function createChannelDetailsModal(category, data, hiddenClass) {
       : data.viewer_count;
 
   return `<div style="max-width: 20%; transition-property: transform, opacity; transition-timing-function: ease;"
-            class="ScTransitionBase-sc-hx4quq-0 bUHYlK tw-transition customTwitchCategory_${category} ${hiddenClass}">
+            class="ScTransitionBase-sc-hx4quq-0 bUHYlK tw-transition customTwitchCategoryChannelPanel ${hiddenClass}">
               <div class="shelf-card__impression-wrapper">
                 <div data-test-selector="shelf-card-selector" class="Layout-sc-1xcs6mc-0 hFIrVr">
                   <article class="Layout-sc-1xcs6mc-0 guHXLE" data-ffz-type="live">
@@ -146,28 +160,13 @@ function createChannelDetailsModal(category, data, hiddenClass) {
           </div>`;
 }
 
-function showMoreEvent(e) {
-  const category = e.target.closest("button").id;
-
-  // hide 'Show More' button area
-  const showMoreArea = document.getElementById(`showMore_${category}`);
-  showMoreArea.classList.add("hiddenArea");
-
-  // show more videos
-  const channels = document.querySelectorAll(
-    `.customTwitchCategory_${category}`
-  );
-
-  channels.forEach((elem) => elem.classList.remove("hiddenChannel"));
-}
-
 function renderCategoryChannels(category, liveChannels) {
   const referenceElement = document.querySelector(
     "#following-page-main-content > div:nth-child(1) > div:nth-child(1)"
   );
 
   const htmlToInsert = `
-    <div>
+    <div id="twitchCustomCategoryFromExtension_${category}">
     <div class="Layout-sc-1xcs6mc-0 bZVrjx find-me">
       ${createCategoryTitle(category)}
       <div aria-labelledby="b6eb5fd44b1b1bee">
@@ -191,8 +190,8 @@ function renderCategoryChannels(category, liveChannels) {
                   </div>
                   ${
                     liveChannels.length > 5
-                      ? `<div id="showMore_${category}" class="Layout-sc-1xcs6mc-0 eajNuk">
-                            <button id="${category}"
+                      ? `<div class="Layout-sc-1xcs6mc-0 eajNuk">
+                            <button id="showmore_${category}"
                                   class="ScCoreButton-sc-ocjdkq-0 showMoreBttn ScCoreButtonText-sc-ocjdkq-3 ibtYyW jYfhUy">
                                   <div class="ScCoreButtonLabel-sc-s7h2b7-0 kHQqnO">
                                       <div data-a-target="tw-core-button-label-text" class="Layout-sc-1xcs6mc-0 phMMp">
@@ -220,4 +219,77 @@ function renderCategoryChannels(category, liveChannels) {
     </div>
     </div>`;
   referenceElement.insertAdjacentHTML("afterend", htmlToInsert);
+}
+
+// -----------------------------------------------------------------------
+
+function showMoreEvent(e) {
+  const buttonRef = e.target.closest("button");
+  const category = buttonRef.id.replace("showmore_", "");
+
+  // hide 'Show More' button area
+  const showMoreArea = buttonRef.parentNode;
+  showMoreArea.classList.add("hiddenArea");
+
+  // show more videos
+  const channels = document.querySelectorAll(
+    `#twitchCustomCategoryFromExtension_${category} .customTwitchCategoryChannelPanel`
+  );
+
+  channels.forEach((elem) => elem.classList.remove("hiddenChannel"));
+}
+
+async function renameEvent(e) {
+  const buttonRef = e.target.closest("button");
+  const oldCategory = buttonRef.id.replace("rename_", "");
+
+  const newCategory = prompt(
+    `Type the new name of this category:\n`,
+    oldCategory
+  ).trim();
+  if (!newCategory || newCategory === "") {
+    throw new Error("Invalid category name!");
+  }
+
+  const categoryAlreadyExists = await doesCategoryExist(newCategory);
+  if (categoryAlreadyExists) {
+    return alert("This category already exists!");
+  }
+
+  const title = buttonRef.parentNode.querySelector("span");
+  const titleChannelsDescriptor = title.innerHTML.split(" ").pop();
+  title.innerHTML = `${newCategory} ${titleChannelsDescriptor}`;
+  buttonRef.id = `rename_${newCategory}`;
+
+  const categoryPanel = document.getElementById(
+    `twitchCustomCategoryFromExtension_${oldCategory}`
+  );
+  categoryPanel.id = `twitchCustomCategoryFromExtension_${newCategory}`;
+
+  const moveToTopButton = document.getElementById(`movetotop_${oldCategory}`);
+  moveToTopButton.id = `movetotop_${newCategory}`;
+
+  const showMoreButton = document.getElementById(`showmore_${oldCategory}`);
+  if (showMoreButton) {
+    showMoreButton.id = `showmore_${newCategory}`;
+  }
+
+  await renameCategory(oldCategory, newCategory);
+}
+
+async function moveCategoryToTop(e) {
+  const buttonRef = e.target.closest("button");
+  const category = buttonRef.id.replace("movetotop_", "");
+
+  const liveChannelsPanel = document.querySelector(
+    "#following-page-main-content > div > div:nth-child(1)"
+  );
+
+  const currCategoryPanel = document.getElementById(
+    `twitchCustomCategoryFromExtension_${category}`
+  );
+
+  liveChannelsPanel.insertAdjacentElement("afterend", currCategoryPanel);
+
+  await moveCategoryToFront(category);
 }

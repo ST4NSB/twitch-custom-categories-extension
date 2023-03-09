@@ -49,6 +49,18 @@ async function renderLiveChannels() {
   showMoreButtonsClass.forEach((button) => {
     button.addEventListener("click", showMoreEvent);
   });
+
+  const renameButtonsClass = document.querySelectorAll("button.renameButton");
+  renameButtonsClass.forEach((button) => {
+    button.addEventListener("click", renameEvent);
+  });
+
+  const moveToTopButtonsClass = document.querySelectorAll(
+    "button.moveToTopButton"
+  );
+  moveToTopButtonsClass.forEach((button) => {
+    button.addEventListener("click", moveCategoryToTop);
+  });
 }
 
 function renderDebugButtonAndEventListeners() {
@@ -91,6 +103,12 @@ function renderAddCategoryButtonAndEventListeners() {
     const category = prompt(promptMessage, "").trim();
     if (!category || category === "") {
       throw new Error("Invalid category name!");
+    }
+
+    if (category.includes("_")) {
+      return alert(
+        "Invalid character included in category creation! (Used: '_')"
+      );
     }
 
     await addCategory(category);
