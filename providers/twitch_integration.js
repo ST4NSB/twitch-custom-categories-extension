@@ -16,9 +16,7 @@ async function getEnvironmentVariables() {
   };
 }
 
-async function getAuthToken() {
-  const env = await getEnvironmentVariables();
-
+async function getAuthToken(env) {
   const params = new URLSearchParams();
   params.append("client_id", env.CLIENT_ID);
   params.append("client_secret", env.CLIENT_SECRET);
@@ -36,39 +34,25 @@ async function getAuthToken() {
   return data.access_token;
 }
 
-async function getLiveChannels(channels, token) {
+async function getChannelsDetails(
+  apiAddress,
+  queryStringParameter,
+  channels,
+  token,
+  env
+) {
   if (!channels || channels.length === 0) {
     return [];
   }
 
-  const env = await getEnvironmentVariables();
   const queryString = channels
-    .map((name) => `user_login=${encodeURIComponent(name.replace(/\s/g, ""))}`)
+    .map(
+      (name) =>
+        `${queryStringParameter}=${encodeURIComponent(name.replace(/\s/g, ""))}`
+    )
     .join("&");
 
-  const response = await fetch(`${liveChannelsUri}?${queryString}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Client-Id": env.CLIENT_ID,
-    },
-  });
-
-  const data = await response.json();
-  return data.data;
-}
-
-async function getChannelsDetails(channels, token) {
-  if (!channels || channels.length === 0) {
-    return [];
-  }
-
-  const env = await getEnvironmentVariables();
-  const queryString = channels
-    .map((name) => `login=${encodeURIComponent(name.replace(/\s/g, ""))}`)
-    .join("&");
-
-  const response = await fetch(`${usersDetailsUri}?${queryString}`, {
+  const response = await fetch(`${apiAddress}?${queryString}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -100,13 +84,23 @@ async function getFullDetailsLiveChannels(allRegisteredChannels) {
   let liveChannels = [];
   let channelsDetails = [];
 
-  const token = await getAuthToken();
+  const env = await getEnvironmentVariables();
+  const token = await getAuthToken(env);
 
   for (let i = 0; i < channelBuckets.length; i++) {
-    let bucketLiveChannels = await getLiveChannels(channelBuckets[i], token);
-    let bucketChannelsDetails = await getChannelsDetails(
+    let bucketLiveChannels = await getChannelsDetails(
+      liveChannelsUri,
+      "user_login",
       channelBuckets[i],
-      token
+      token,
+      env
+    );
+    let bucketChannelsDetails = await getChannelsDetails(
+      usersDetailsUri,
+      "login",
+      channelBuckets[i],
+      token,
+      env
     );
 
     liveChannels = [...liveChannels, ...bucketLiveChannels];
