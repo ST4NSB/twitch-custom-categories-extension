@@ -43,7 +43,7 @@ async function getLiveChannels(channels, token) {
 
   const env = await getEnvironmentVariables();
   const queryString = channels
-    .map((name) => `user_login=${encodeURIComponent(name)}`)
+    .map((name) => `user_login=${encodeURIComponent(name.replace(/\s/g, ""))}`)
     .join("&");
 
   const response = await fetch(`${liveChannelsUri}?${queryString}`, {
@@ -65,7 +65,7 @@ async function getChannelsDetails(channels, token) {
 
   const env = await getEnvironmentVariables();
   const queryString = channels
-    .map((name) => `login=${encodeURIComponent(name)}`)
+    .map((name) => `login=${encodeURIComponent(name.replace(/\s/g, ""))}`)
     .join("&");
 
   const response = await fetch(`${usersDetailsUri}?${queryString}`, {
