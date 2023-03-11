@@ -16,7 +16,7 @@ async function getEnvironmentVariables() {
   };
 }
 
-async function getOAUTH2Token() {
+async function getAuthToken() {
   const env = await getEnvironmentVariables();
 
   const params = new URLSearchParams();
@@ -82,13 +82,36 @@ async function getChannelsDetails(channels, token) {
 
 // -----------------------------------------------------------------------
 
+function splitChannelsInBuckets(channels, bucketMaxSize = 100) {
+  if (!channels || channels.length === 0) {
+    return [];
+  }
+
+  let buckets = [];
+  for (let i = 0; i < channels.length; i += bucketMaxSize) {
+    let chunk = channels.slice(i, i + bucketMaxSize);
+    buckets.push(chunk);
+  }
+  return buckets;
+}
+
 async function getFullDetailsLiveChannels(allRegisteredChannels) {
-  const token = await getOAUTH2Token();
-  const liveChannels = await getLiveChannels(allRegisteredChannels, token);
-  const channelsDetails = await getChannelsDetails(
-    allRegisteredChannels,
-    token
-  );
+  const channelBuckets = splitChannelsInBuckets(allRegisteredChannels);
+  let liveChannels = [];
+  let channelsDetails = [];
+
+  const token = await getAuthToken();
+
+  for (let i = 0; i < channelBuckets.length; i++) {
+    let bucketLiveChannels = await getLiveChannels(channelBuckets[i], token);
+    let bucketChannelsDetails = await getChannelsDetails(
+      channelBuckets[i],
+      token
+    );
+
+    liveChannels = [...liveChannels, ...bucketLiveChannels];
+    channelsDetails = [...channelsDetails, ...bucketChannelsDetails];
+  }
 
   const liveChannelsDict = {};
   for (let i = 0; i < liveChannels.length; i++) {

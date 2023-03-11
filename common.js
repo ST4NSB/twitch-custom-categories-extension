@@ -168,9 +168,13 @@ function renderDeleteChannelFromCategoryButtonAndEventListeners() {
   deleteChannelFromCategoryButtonId.addEventListener(
     "click",
     async function () {
-      let channelName = document.querySelector(
-        "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.tNDkq"
-      )?.innerHTML;
+      let channelName =
+        document.querySelector(
+          "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.tNDkq" // live channel
+        )?.innerHTML ||
+        document.querySelector(
+          "h1.CoreText-sc-1txzju1-0.ScTitleText-sc-d9mj2s-0.hhBVsV.igzOaC" // offline channel
+        )?.innerHTML;
 
       if (!channelName) {
         return alert(
