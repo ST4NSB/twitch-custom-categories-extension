@@ -78,7 +78,7 @@ function createChannelDetailsModal(category, data, hiddenClass) {
                           </div>
                           <div class="Layout-sc-1xcs6mc-0 BcKcx">
                           <div class="InjectLayout-sc-1i43xsx-0 hVPOSx">
-                            ${data.tags
+                            ${data.tags ? data.tags
                               .map((tag, index) =>
                                 index < limitTags
                                   ? `
@@ -94,7 +94,7 @@ function createChannelDetailsModal(category, data, hiddenClass) {
                                       </a></div>`
                                   : ""
                               )
-                              .join("")}
+                              .join("") : ""}
                             </div>
                           </div>
                         </div>
