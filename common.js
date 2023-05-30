@@ -277,8 +277,6 @@ async function showContentBasedOnPage(currentPageUrl) {
     document.querySelector("#deleteCustomCategory").style.display = "block";
     document.querySelector("#addChannelToCategory").style.display = "none";
     document.querySelector("#deleteChannelFromCategory").style.display = "none";
-
-    await renderLiveChannels();
   } else {
     document.querySelector("#addCustomCategory").style.display = "none";
     document.querySelector("#deleteCustomCategory").style.display = "none";
@@ -289,11 +287,27 @@ async function showContentBasedOnPage(currentPageUrl) {
 }
 
 function createMutationObserver() {
+  let inProcessing = false;
+  const customCategories = document.getElementsByClassName(
+    "customCategoriesLocalize"
+  );
+
   const observer = new MutationObserver(async (mutationsList, observer) => {
     const currentPageUrl = window.location.href;
     if (oldPageUrl !== currentPageUrl) {
       oldPageUrl = currentPageUrl;
       await showContentBasedOnPage(currentPageUrl);
+    }
+
+    if (
+      currentPageUrl.endsWith(mainPagePath) &&
+      customCategories.length === 0 &&
+      !inProcessing
+    ) {
+      inProcessing = true;
+      Array.from(customCategories).forEach((element) => element.remove());
+      await renderLiveChannels();
+      inProcessing = false;
     }
   });
 

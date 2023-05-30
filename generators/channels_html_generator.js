@@ -78,10 +78,12 @@ function createChannelDetailsModal(category, data, hiddenClass) {
                           </div>
                           <div class="Layout-sc-1xcs6mc-0 BcKcx">
                           <div class="InjectLayout-sc-1i43xsx-0 hVPOSx">
-                            ${data.tags ? data.tags
-                              .map((tag, index) =>
-                                index < limitTags
-                                  ? `
+                            ${
+                              data.tags
+                                ? data.tags
+                                    .map((tag, index) =>
+                                      index < limitTags
+                                        ? `
                                   <div class="InjectLayout-sc-1i43xsx-0 koJRns"><a
                                           class="ScTag-sc-14s7ciu-0 bOVWlO tw-tag"
                                           aria-describedby="P9XHUIVkATUExnFgWYbjNpDEumxLEtlJ"
@@ -92,9 +94,11 @@ function createChannelDetailsModal(category, data, hiddenClass) {
                                                   <span>${tag}</span></div>
                                           </div>
                                       </a></div>`
-                                  : ""
-                              )
-                              .join("") : ""}
+                                        : ""
+                                    )
+                                    .join("")
+                                : ""
+                            }
                             </div>
                           </div>
                         </div>
@@ -166,7 +170,7 @@ function renderCategoryChannels(category, liveChannels) {
   );
 
   const htmlToInsert = `
-    <div id="twitchCustomCategoryFromExtension_${category}">
+    <div class="customCategoriesLocalize" id="twitchCustomCategoryFromExtension_${category}">
     <div class="Layout-sc-1xcs6mc-0 bZVrjx find-me">
       ${createCategoryTitle(category)}
       <div aria-labelledby="b6eb5fd44b1b1bee">
