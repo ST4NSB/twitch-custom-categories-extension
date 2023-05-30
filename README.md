@@ -1,4 +1,4 @@
-# twitch-custom-categories-extension
+# Twitch.TV Custom Categories Chrome Extension
 
 Extension for the user to add custom categories on twitch.tv that will appear on the following page.
 
