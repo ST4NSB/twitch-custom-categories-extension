@@ -115,7 +115,7 @@ function createChannelDetailsModal(category, data, hiddenClass) {
                       </div>
                     </div>
 
-                    <div class="ScWrapper-sc-1wvuch4-0 custom_colors fJREZI tw-hover-accent-effect">
+                    <div class="ScWrapper-sc-1wvuch4-0 custom_colors tw-hover-accent-effect">
                       <div class="ScTransformWrapper-sc-1wvuch4-1 ScCornerTop-sc-1wvuch4-2 gEBqEV hPOElK dUXffE cOgLZP">
                       </div>
                       <div

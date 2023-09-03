@@ -1,53 +1,36 @@
 {
-	"manifest_version": 2,
-	"name": "Twitch custom categories",
-	"author": "ST4NSB",
-	"permissions": [
-		"tabs",
-		"storage",
-  		"activeTab",
-		"*://*.twitch.tv/**"
-	],
-	"description": "Custom categories integrated within Twitch",
-	"version": "1.1",
-    "web_accessible_resources": [
-        ".env"
-    ],
-	"content_scripts": [
-		{
-			"matches": [
-				"*://*.twitch.tv/directory/following"
-			],
-			"css": [
-				"assets/content.css"
-			],
-			"js": [
-				"providers/storage.js",
-				"providers/twitch_integration.js",
-				"generators/buttons_html_generator.js",
-				"generators/channels_html_generator.js",
-				"common.js",
-				"main_page.js"
-			]
-		},
-		{
-			"matches": [
-				"*://*.twitch.tv/*"
-			],
-			"exclude_matches": [
-				"*://*.twitch.tv/directory/following"
-			],
-            "css": [
-				"assets/content.css"
-			],
-			"js": [
-				"providers/storage.js",
-				"providers/twitch_integration.js",
-				"generators/buttons_html_generator.js",
-				"generators/channels_html_generator.js",
-				"common.js",
-				"channel.js"
-			]
-		}
-	]
+  "manifest_version": 2,
+  "name": "Twitch custom categories",
+  "author": "ST4NSB",
+  "permissions": ["tabs", "storage", "activeTab", "*://*.twitch.tv/**"],
+  "description": "Custom categories integrated within Twitch",
+  "version": "1.1",
+  "web_accessible_resources": [".env"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.twitch.tv/directory/following"],
+      "css": ["assets/twitch.css", "assets/content.css"],
+      "js": [
+        "providers/storage.js",
+        "providers/twitch_integration.js",
+        "generators/buttons_html_generator.js",
+        "generators/channels_html_generator.js",
+        "common.js",
+        "main_page.js"
+      ]
+    },
+    {
+      "matches": ["*://*.twitch.tv/*"],
+      "exclude_matches": ["*://*.twitch.tv/directory/following"],
+      "css": ["assets/twitch.css", "assets/content.css"],
+      "js": [
+        "providers/storage.js",
+        "providers/twitch_integration.js",
+        "generators/buttons_html_generator.js",
+        "generators/channels_html_generator.js",
+        "common.js",
+        "channel.js"
+      ]
+    }
+  ]
 }
