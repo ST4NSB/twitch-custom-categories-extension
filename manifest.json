@@ -3,8 +3,8 @@
   "name": "Twitch custom categories",
   "author": "ST4NSB",
   "permissions": ["tabs", "storage", "activeTab", "*://*.twitch.tv/**"],
-  "description": "Custom categories integrated within Twitch",
-  "version": "1.1",
+  "description": "Enhance your twitch.tv experience with our Chrome extension! Customize your front page by adding personalized categories to organize and discover your favorite streamers effortlessly",
+  "version": "1.2",
   "web_accessible_resources": [".env"],
   "content_scripts": [
     {
