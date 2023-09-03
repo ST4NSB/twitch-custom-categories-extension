@@ -1,7 +1,7 @@
-function createCategoryTitle(name) {
+function createCategoryTitle(name, liveChannelsCount) {
   return `<div class="Layout-sc-1xcs6mc-0 hJDYkS mainTitleClass">
             <h2 class="CoreText-sc-1txzju1-0 iHdggG ScTitleText-sc-d9mj2s-0 jKVhlu igzOaC tw-title">
-              ${name} channels
+              ${name} channels (LIVE: ${liveChannelsCount})
             </h2>
             <button id="rename_${name}" title="Edit this category name" class="renameButton icon-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -166,7 +166,7 @@ function renderCategoryChannels(category, liveChannels) {
   const htmlToInsert = `
     <div class="customCategoriesLocalize" id="twitchCustomCategoryFromExtension_${category}">
     <div class="Layout-sc-1xcs6mc-0 bZVrjx find-me">
-      ${createCategoryTitle(category)}
+      ${createCategoryTitle(category, liveChannels.length)}
       <div aria-labelledby="b6eb5fd44b1b1bee">
         <div class="InjectLayout-sc-1i43xsx-0 eptOJT tw-transition-group">
           <div class="ScTower-sc-1sjzzes-0 czzjEE RMeqZ tw-tower">
