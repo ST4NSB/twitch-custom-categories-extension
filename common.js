@@ -1,6 +1,11 @@
 let oldPageUrl = "";
 const mainPagePath = "/directory/following";
 
+const liveChannelNameSelector =
+  "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.kuBPOn.tw-title";
+const offlineChannelNameSelector =
+  "h1.CoreText-sc-1txzju1-0.ScTitleText-sc-d9mj2s-0.gDTWNg.iaMqYH.tw-title";
+
 // -----------------------------------------------------------------------
 
 async function getLiveChannelsInEveryCategory() {
@@ -170,10 +175,10 @@ function renderDeleteChannelFromCategoryButtonAndEventListeners() {
     async function () {
       let channelName =
         document.querySelector(
-          "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.tNDkq" // live channel
+          liveChannelNameSelector // live channel
         )?.innerHTML ||
         document.querySelector(
-          "h1.CoreText-sc-1txzju1-0.ScTitleText-sc-d9mj2s-0.hhBVsV.igzOaC" // offline channel
+          offlineChannelNameSelector // offline channel
         )?.innerHTML;
 
       if (!channelName) {
@@ -228,10 +233,10 @@ function renderAddChannelToCategoryButtonAndEventListeners() {
   addChannelToCategoryButtonId.addEventListener("click", async function () {
     let channelName =
       document.querySelector(
-        "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.tNDkq" // live channel
+        liveChannelNameSelector // live channel
       )?.innerHTML ||
       document.querySelector(
-        "h1.CoreText-sc-1txzju1-0.ScTitleText-sc-d9mj2s-0.hhBVsV.igzOaC" // offline channel
+        offlineChannelNameSelector // offline channel
       )?.innerHTML;
 
     if (!channelName) {

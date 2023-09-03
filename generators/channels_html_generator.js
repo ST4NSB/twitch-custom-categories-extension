@@ -1,7 +1,7 @@
 function createCategoryTitle(name) {
-  return `<div class="Layout-sc-1xcs6mc-0 mainTitleClass">
-            <h2 class="CoreText-sc-1txzju1-0 ScTitleText-sc-d9mj2s-0 jKVhlu igzOaC tw-title">
-              <span id="bdc1c6b6aa399e8d" class="CoreText-sc-1txzju1-0 feJdGm">${name} channels</span>
+  return `<div class="Layout-sc-1xcs6mc-0 hJDYkS mainTitleClass">
+            <h2 class="CoreText-sc-1txzju1-0 iHdggG ScTitleText-sc-d9mj2s-0 jKVhlu igzOaC tw-title">
+              ${name} channels
             </h2>
             <button id="rename_${name}" title="Edit this category name" class="renameButton icon-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -36,61 +36,55 @@ function createChannelDetailsModal(category, data, hiddenClass) {
   return `<div style="max-width: 20%; transition-property: transform, opacity; transition-timing-function: ease;"
             class="ScTransitionBase-sc-hx4quq-0 bUHYlK tw-transition customTwitchCategoryChannelPanel ${hiddenClass}">
               <div class="shelf-card__impression-wrapper">
-                <div data-test-selector="shelf-card-selector" class="Layout-sc-1xcs6mc-0 hFIrVr">
-                  <article class="Layout-sc-1xcs6mc-0 guHXLE" data-ffz-type="live">
-                    <div class="Layout-sc-1xcs6mc-0 gUnRUD">
-                      <div class="Layout-sc-1xcs6mc-0 ilDsKw">
-                        <div class="ScTextWrapper-sc-10mto54-1 fwZpSK">
-                          <div class="ScTextMargin-sc-10mto54-2 bcdHdk">
+                <div data-test-selector="shelf-card-selector" class="Layout-sc-1xcs6mc-0 hFIrVr iaYZdR">
+                  <article class="Layout-sc-1xcs6mc-0 guHXLE fAprix" data-ffz-type="live">
+                    <div class="Layout-sc-1xcs6mc-0 gUnRUD gIALbm">
+                      <div class="Layout-sc-1xcs6mc-0 ilDsKw fSCWTp">
+                        <div class="ScTextWrapper-sc-10mto54-1 fwZpSK CSRpv">
+                          <div class="ScTextMargin-sc-10mto54-2 lkOZnV">
                             <a data-focusable="true"
                                 data-test-selector="TitleAndChannel"
                                 data-a-target="preview-card-channel-link"
                                 aria-label="${data.title}"
-                                class="ScCoreLink-sc-16kq0mq-0 jKBAWW tw-link" href="/${
+                                class="ScCoreLink-sc-16kq0mq-0 jKBAWW bMtPpj tw-link" href="/${
                                   data.user_name
                                 }">
-                                  <div class="Layout-sc-1xcs6mc-0 idlTrs"><button
-                                          data-test-selector="StreamTitle"
-                                          data-a-target="preview-card-title-link" tabindex="-1"
-                                          lines="1"
-                                          class="ScCoreLink-sc-16kq0mq-0 fdJOgV Layout-sc-1xcs6mc-0 ScCoreLink-sc-bhsr9c-0 dtGthb jYyMcQ tw-link">
-                                          <h3 title="${data.title}"
-                                              class="CoreText-sc-1txzju1-0 dlDlel">${
-                                                data.title
-                                              }</h3>
-                                      </button>
-                                    </div>
+                                <h3 title="${
+                                  data.title
+                                }" class="CoreText-sc-1txzju1-0 dlDlel jpNucq">${
+    data.title
+  }</h3>
                                 <p data-a-target="preview-card-channel-link" tabindex="-1"
                                     title="${
                                       data.user_name
-                                    }" class="CoreText-sc-1txzju1-0 jiepBC">
+                                    }" class="CoreText-sc-1txzju1-0 jiepBC eZjVb">
                                     ${data.user_name}
                                 </p>
                             </a>
-                            <p class="CoreText-sc-1txzju1-0 jiepBC">
+                            <p class="CoreText-sc-1txzju1-0 jiepBC eZjVb">
                               <a data-test-selector="GameLink"
                                 data-a-target="preview-card-game-link"
-                                class="ScCoreLink-sc-16kq0mq-0 eYjhIv tw-link"
+                                class="ScCoreLink-sc-16kq0mq-0 eYjhIv kQlOWy tw-link"
                                 href="/directory/game/${data.game_name}">
                                   ${data.game_name}
                               </a>
                             </p>
                           </div>
-                          <div class="Layout-sc-1xcs6mc-0 BcKcx">
-                          <div class="InjectLayout-sc-1i43xsx-0 hVPOSx">
+                          <div class="Layout-sc-1xcs6mc-0 BcKcx czEOvg">
+                          <div class="InjectLayout-sc-1i43xsx-0 hVPOSx cerOzE">
                             ${
                               data.tags
                                 ? data.tags
                                     .map((tag, index) =>
                                       index < limitTags
                                         ? `
-                                  <div class="InjectLayout-sc-1i43xsx-0 koJRns"><a
-                                          class="ScTag-sc-14s7ciu-0 bOVWlO tw-tag"
+                                  <div class="InjectLayout-sc-1i43xsx-0 koJRns hmETe"><a
+                                          class="ScTag-sc-14s7ciu-0 bOVWlO bupdaH tw-tag"
                                           aria-describedby="P9XHUIVkATUExnFgWYbjNpDEumxLEtlJ"
                                           aria-label="Tag, ${tag}" data-a-target="${tag}"
                                           href="/directory/all/tags/${tag}">
-                                          <div class="ScTagContent-sc-14s7ciu-1 fUclzK">
-                                              <div class="ScTagText-sc-14s7ciu-2 bPzjwR">
+                                          <div class="ScTagContent-sc-14s7ciu-1 fUclzK bOnUXP">
+                                              <div class="ScTagText-sc-14s7ciu-2 ScTruncateText-sc-i3kjgq-0 bPzjwR iXYIJp">
                                                   <span>${tag}</span></div>
                                           </div>
                                       </a></div>`
@@ -102,55 +96,55 @@ function createChannelDetailsModal(category, data, hiddenClass) {
                             </div>
                           </div>
                         </div>
-                        <div class="ScImageWrapper-sc-10mto54-0 jrfBpi">
+                        <div class="ScImageWrapper-sc-10mto54-0 jrfBpi fyZLSX">
                             <a data-test-selector="preview-card-avatar" tabindex="-1"
-                                class="ScCoreLink-sc-16kq0mq-0 jSrrlW tw-link" href="/${
+                                class="ScCoreLink-sc-16kq0mq-0 jSrrlW ebZBYr tw-link" href="/${
                                   data.user_name
                                 }">
-                                <div class="ScAspectRatio-sc-18km980-1 gxJZAm tw-aspect">
-                                    <div class="ScAspectSpacer-sc-18km980-0 kiiGFY"></div>
-                                    <figure aria-label="${data.user_name}"
-                                        class="ScAvatar-sc-144b42z-0 jBfrnP tw-avatar"><img
-                                            class="InjectLayout-sc-1i43xsx-0 bEwPpb tw-image tw-image-avatar"
+                                <div class="ScAspectRatio-sc-18km980-1 gxJZAm nvuLn tw-aspect">
+                                    <div class="ScAspectSpacer-sc-18km980-0 kiiGFY dMlEgZ"></div>
+                                    <div aria-label="${data.user_name}"
+                                        class="ScAvatar-sc-144b42z-0 jBfrnP dddgvK tw-avatar"><img
+                                            class="InjectLayout-sc-1i43xsx-0 gljEcG bEwPpb tw-image tw-image-avatar"
                                             alt="${data.user_name}"
                                             src="${data.profile_image_url}">
-                                    </figure>
+                                    </div>
                                 </div>
                             </a>
                           </div>
                       </div>
                     </div>
 
-                    <div class="ScWrapper-sc-1wvuch4-0 custom_colors tw-hover-accent-effect">
-                      <div class="ScTransformWrapper-sc-1wvuch4-1 ScCornerTop-sc-1wvuch4-2 gEBqEV hPOElK">
+                    <div class="ScWrapper-sc-1wvuch4-0 custom_colors fJREZI tw-hover-accent-effect">
+                      <div class="ScTransformWrapper-sc-1wvuch4-1 ScCornerTop-sc-1wvuch4-2 gEBqEV hPOElK dUXffE cOgLZP">
                       </div>
                       <div
-                          class="ScTransformWrapper-sc-1wvuch4-1 ScCornerBottom-sc-1wvuch4-3 fNwmtl dTxLuP">
+                          class="ScTransformWrapper-sc-1wvuch4-1 ScCornerBottom-sc-1wvuch4-3 fNwmtl dTxLuP fwcrNw ePncOC">
                       </div>
-                      <div class="ScTransformWrapper-sc-1wvuch4-1 ScEdgeLeft-sc-1wvuch4-4 jhgGdR blwnUh">
+                      <div class="ScTransformWrapper-sc-1wvuch4-1 ScEdgeLeft-sc-1wvuch4-4 jhgGdR blwnUh kOCzPo fUpopo">
                       </div>
                       <div
-                          class="ScTransformWrapper-sc-1wvuch4-1 ScEdgeBottom-sc-1wvuch4-5 dJYDVl dWkueR">
+                          class="ScTransformWrapper-sc-1wvuch4-1 ScEdgeBottom-sc-1wvuch4-5 dJYDVl dWkueR hxhSlw djJjFs">
                       </div>
-                      <div class="ScTransformWrapper-sc-1wvuch4-1 gMwbGx"><a
+                      <div class="ScTransformWrapper-sc-1wvuch4-1 gMwbGx hTMUmc"><a
                               data-a-target="preview-card-image-link" tabindex="-1"
-                              class="ScCoreLink-sc-16kq0mq-0 jSrrlW preview-card-image-link tw-link"
+                              class="ScCoreLink-sc-16kq0mq-0 jSrrlW ebZBYr preview-card-image-link tw-link"
                               href="/${data.user_name}">
-                              <div class="Layout-sc-1xcs6mc-0 hkwQCo">
-                                  <div class="ScAspectRatio-sc-18km980-1 hTTohL tw-aspect">
-                                      <div class="ScAspectSpacer-sc-18km980-0 ftHEOL"></div><img
+                              <div class="Layout-sc-1xcs6mc-0 hkwQCo cCEKFF">
+                                  <div class="ScAspectRatio-sc-18km980-1 hTTohL jMbAyK tw-aspect">
+                                      <div class="ScAspectSpacer-sc-18km980-0 ftHEOL laApky"></div><img
                                           alt="${data.title}" class="tw-image"
                                           src="${thumbnailBigger}">
                                   </div>
-                                  <div class="ScPositionCorner-sc-1shjvnv-1 hoKYhE">
-                                      <div class="ScChannelStatusTextIndicator-sc-qtgrnb-0 ivjxmt tw-channel-status-text-indicator"
+                                  <div class="ScPositionCorner-sc-1shjvnv-1 hoKYhE hyKylJ">
+                                      <div class="ScChannelStatusTextIndicator-sc-qtgrnb-0 ivjxmt bLhnSM tw-channel-status-text-indicator"
                                           font-size="font-size-6">
-                                          <p class="CoreText-sc-1txzju1-0 ecTWUv">LIVE</p>
+                                          <p class="CoreText-sc-1txzju1-0 ecTWUv gvsscq">LIVE</p>
                                       </div>
                                   </div>
-                                  <div class="ScPositionCorner-sc-1shjvnv-1 gUtzBI">
+                                  <div class="ScPositionCorner-sc-1shjvnv-1 gUtzBI eoUNUZ">
                                       <div
-                                          class="ScMediaCardStatWrapper-sc-anph5i-0 bEHknf tw-media-card-stat">
+                                          class="ScMediaCardStatWrapper-sc-anph5i-0 bEHknf kTpKoW tw-media-card-stat">
                                           ${convertedNumberOfViewers} viewers
                                       </div>
                                   </div>
@@ -175,7 +169,7 @@ function renderCategoryChannels(category, liveChannels) {
       ${createCategoryTitle(category)}
       <div aria-labelledby="b6eb5fd44b1b1bee">
         <div class="InjectLayout-sc-1i43xsx-0 eptOJT tw-transition-group">
-          <div class="ScTower-sc-1sjzzes-0 czzjEE tw-tower">
+          <div class="ScTower-sc-1sjzzes-0 czzjEE RMeqZ tw-tower">
             ${liveChannels
               .map((x, i) =>
                 createChannelDetailsModal(
@@ -188,25 +182,26 @@ function renderCategoryChannels(category, liveChannels) {
           </div>
         </div>
           <div>
-              <div class="Layout-sc-1xcs6mc-0 fwdLsz show-more__move-up">
-                  <div class="Layout-sc-1xcs6mc-0 budyCR">
-                      <div class="Layout-sc-1xcs6mc-0 dNDhLW show-more__line"></div>
+              <div class="Layout-sc-1xcs6mc-0 fwdLsz bONMUS show-more__move-up">
+                  <div class="Layout-sc-1xcs6mc-0 budyCR fUNuIg">
+                      <div class="Layout-sc-1xcs6mc-0 dNDhLW kcCKxL show-more__line"></div>
                   </div>
                   ${
                     liveChannels.length > 5
-                      ? `<div class="Layout-sc-1xcs6mc-0 eajNuk">
+                      ? `<div class="Layout-sc-1xcs6mc-0 eajNuk gUMpqp">
                             <button id="showmore_${category}"
-                                  class="ScCoreButton-sc-ocjdkq-0 showMoreBttn ScCoreButtonText-sc-ocjdkq-3 ibtYyW jYfhUy">
-                                  <div class="ScCoreButtonLabel-sc-s7h2b7-0 kHQqnO">
-                                      <div data-a-target="tw-core-button-label-text" class="Layout-sc-1xcs6mc-0 phMMp">
-                                          <div class="Layout-sc-1xcs6mc-0 bTJhJp">
-                                              <div class="Layout-sc-1xcs6mc-0 byLNWv">
+                                  class="ScCoreButton-sc-ocjdkq-0 showMoreBttn ScCoreButtonText-sc-ocjdkq-3 ibtYyW jYfhUy hZACqf dgtHA-D">
+                                  <div class="ScCoreButtonLabel-sc-s7h2b7-0 kHQqnO iDmHHv">
+                                      <div data-a-target="tw-core-button-label-text" class="Layout-sc-1xcs6mc-0 phMMp eHKPFw">
+                                          <div class="Layout-sc-1xcs6mc-0 bTJhJp hdIVkw">
+                                              <div class="Layout-sc-1xcs6mc-0 byLNWv krgEcO">
                                                   <p aria-label="Show more" class="CoreText-sc-1txzju1-0">Show more</p>
                                               </div>
-                                              <figure class="ScFigure-sc-a7mori-0 gJgjXg tw-svg"><svg width="2rem" height="2rem"
+                                              <div class="ScFigure-sc-a7mori-0 gJgjXg tw-svg ScFigure-sc-wkgzod-0 edbyrI">
+                                                  <svg width="2rem" height="2rem"
                                                       viewBox="0 0 20 20" fill="currentColor">
                                                       <path d="M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z"></path>
-                                                  </svg></figure>
+                                                  </svg></div>
                                           </div>
                                       </div>
                                   </div>
@@ -214,8 +209,8 @@ function renderCategoryChannels(category, liveChannels) {
                           </div>`
                       : ""
                   }
-                <div class="Layout-sc-1xcs6mc-0 budyCR">
-                <div class="Layout-sc-1xcs6mc-0 dNDhLW show-more__line"></div>
+                <div class="Layout-sc-1xcs6mc-0 budyCR fUNuIg">
+                <div class="Layout-sc-1xcs6mc-0 dNDhLW kcCKxL show-more__line"></div>
                   </div>
               </div>
           </div>
