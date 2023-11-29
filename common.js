@@ -1,10 +1,8 @@
 let oldPageUrl = "";
 const mainPagePath = "/directory/following";
 
-const liveChannelNameSelector =
-  "h1.CoreText-sc-1txzju1-0.InjectLayout-sc-1i43xsx-0.kuBPOn.tw-title";
-const offlineChannelNameSelector =
-  "h1.CoreText-sc-1txzju1-0.ScTitleText-sc-d9mj2s-0.gDTWNg.iaMqYH.tw-title";
+const liveChannelNameSelector = "#live-channel-stream-information h1.tw-title";
+const offlineChannelNameSelector = "#offline-channel-main-content h1.tw-title";
 
 // -----------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-const navBarSelector = ".wNwlN";
+const navBarSelector = ".top-nav__menu > div:last-of-type";
 
 // -------------------------------------------------------
 

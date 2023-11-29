@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Twitch Custom Categories",
+  "author": "ST4NSB",
+  "permissions": ["tabs", "storage", "activeTab", "*://*.twitch.tv/**"],
+  "description": "Enhance your twitch.tv experience with our Chrome extension! Customize your front page by adding personalized categories to organize and discover your favorite streamers effortlessly",
+  "version": "1.4",
+  "web_accessible_resources": [".env"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.twitch.tv/directory/following"],
+      "js": ["content.js"]
+    }
+  ]
+}
