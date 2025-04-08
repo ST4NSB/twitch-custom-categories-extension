@@ -8,6 +8,32 @@ Extension for users to add custom categories on twitch.tv that will appear on th
 - Create an .env file with CLIENT_ID & CLIENT_SECRET: 
 ![image](https://github.com/ST4NSB/twitch-custom-categories-extension/assets/38291834/7a029602-b42b-49aa-ba25-783d0d7a8a56)
 - Generate and include the CLIENT_ID & CLIENT_SECRET into the .env file from https://dev.twitch.tv (this article describes the steps https://support.streamweasels.com/article/12-how-to-setup-a-client-id-and-client-secret)
+- (OPTIONAL step to load categories on the first load) Create a **saved_categories.json** file, category name as the root, channel names for the array, example below:
+
+```json
+{
+  "Casual": [
+    "TwitchRivals",
+    "LIRIK"
+  ],
+  "LeagueOfLegends": [
+    "loltyler1",
+    "LEC",
+    "LCK",
+    "LCS"
+  ],
+  "Programming": ["pajlada", "IndieHorrorDev", "UnrealEngine", "ThePrimeagen"],
+  "Speedrun": [
+    "The_Happy_Hob",
+    "Distortion2",
+    "Elajjaz",
+    "LilAggy",
+    "GamesDoneQuick",
+    "Squillakilla"
+  ]
+}
+```
+  
 - Go to **Manage extensions** tab
 - Enable **Developer mode**
 - Click **Load unpacked**, select the folder where you unzipped the files from this project 
