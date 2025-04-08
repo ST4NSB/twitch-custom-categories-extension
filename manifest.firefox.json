@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "Twitch custom categories - V2",
+  "author": "ST4NSB",
+  "permissions": ["tabs", "storage", "activeTab"],
+  "description": "Enhance your twitch.tv experience with our Firefox extension! Customize your front page by adding personalized categories to organize and discover your favorite streamers effortlessly",
+  "version": "2",
+  "host_permissions": ["*://*.twitch.tv/*"],
+  "content_security_policy": {
+    "script-src": "'self'",
+    "object-src": "'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.twitch.tv/directory/following"],
+      "css": ["assets/twitch.css", "assets/content.css"],
+      "js": [
+        "providers/storage.js",
+        "providers/twitch_integration.js",
+        "generators/buttons_html_generator.js",
+        "generators/channels_html_generator.js",
+        "common.js",
+        "main_page.js"
+      ]
+    },
+    {
+      "matches": ["*://*.twitch.tv/*"],
+      "exclude_matches": ["*://*.twitch.tv/directory/following"],
+      "css": ["assets/twitch.css", "assets/content.css"],
+      "js": [
+        "providers/storage.js",
+        "providers/twitch_integration.js",
+        "generators/buttons_html_generator.js",
+        "generators/channels_html_generator.js",
+        "common.js",
+        "channel.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": ["assets/*.css", ".env", "saved_categories.json"]
+}

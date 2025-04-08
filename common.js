@@ -33,6 +33,12 @@ async function loadCategoriesFromFile() {
       throw new Error("Unsupported browser");
     }
 
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch categories from file: ${response.statusText}`
+      );
+    }
+
     const newCategoriesData = await response.json();
 
     // Loop through each category in the data
