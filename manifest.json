@@ -1,11 +1,17 @@
 {
-  "manifest_version": 2,
-  "name": "Twitch custom categories",
+  "manifest_version": 3,
+  "name": "Twitch custom categories - V2",
   "author": "ST4NSB",
-  "permissions": ["tabs", "storage", "activeTab", "*://*.twitch.tv/**"],
+  "permissions": ["tabs", "storage", "activeTab"],
   "description": "Enhance your twitch.tv experience with our Chrome extension! Customize your front page by adding personalized categories to organize and discover your favorite streamers effortlessly",
-  "version": "1.3",
-  "web_accessible_resources": [".env"],
+  "version": "2",
+  "host_permissions": ["*://*.twitch.tv/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [".env", "saved_categories.json"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "content_scripts": [
     {
       "matches": ["*://*.twitch.tv/directory/following"],

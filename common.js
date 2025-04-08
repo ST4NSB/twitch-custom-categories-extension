@@ -1,10 +1,73 @@
 let oldPageUrl = "";
 const mainPagePath = "/directory/following";
+const categoriesSavedFileName = "saved_categories.json";
 
 const liveChannelNameSelector = "#live-channel-stream-information h1.tw-title";
 const offlineChannelNameSelector = "#offline-channel-main-content h1.tw-title";
 
 // -----------------------------------------------------------------------
+
+async function clearDataOnFirstLoad() {
+  // Set a flag that this is the first load
+  localStorage.setItem("twitchCustomCategoriesFirstLoad", "true");
+
+  // Clear all existing categories and channels from storage
+  const categories = await getCategories();
+  for (const category of categories) {
+    await deleteCategory(category);
+  }
+}
+
+async function loadCategoriesFromFile() {
+  try {
+    // Fetch categories data from the JSON file in the extension
+    let response;
+
+    if (typeof browser !== "undefined") {
+      // Firefox
+      response = await fetch(browser.runtime.getURL(categoriesSavedFileName));
+    } else if (typeof chrome !== "undefined") {
+      // Chrome
+      response = await fetch(chrome.runtime.getURL(categoriesSavedFileName));
+    } else {
+      throw new Error("Unsupported browser");
+    }
+
+    const newCategoriesData = await response.json();
+
+    // Loop through each category in the data
+    for (const category in newCategoriesData) {
+      if (await doesCategoryExist(category)) {
+        // If the category exists, check each channel
+        const newChannels = newCategoriesData[category];
+
+        // Loop through each channel in the category
+        for (const channel of newChannels) {
+          const channelInCategory = await isChannelInCategory(
+            channel,
+            category
+          );
+          if (!channelInCategory) {
+            // If the channel doesn't exist, add it
+            await addChannelToCategory(channel, category);
+          }
+        }
+      } else {
+        // If the category doesn't exist, create it
+        await addCategory(category);
+
+        // Add all channels to the new category
+        for (const channel of newCategoriesData[category]) {
+          await addChannelToCategory(channel, category);
+        }
+      }
+    }
+
+    console.log("Categories and channels loaded successfully from the file.");
+  } catch (error) {
+    console.error("Error loading categories from file:", error);
+  }
+}
 
 async function getLiveChannelsInEveryCategory() {
   const allRegisteredChannels = await getAllChannels();
@@ -74,17 +137,23 @@ function renderDebugButtonAndEventListeners() {
     const allCategories = await getCategories();
     if (allCategories.length === 0) {
       alert("No existing categories!");
+      return;
     }
-    let debugMessage = `Debug Twitch Custom Categories:\nShowing all categories with all registered channels in storage!\n\n`;
+
+    let debugObject = {}; // This will store the categories and their channels as key-value pairs
 
     for (let i = 0; i < allCategories.length; i++) {
       let category = allCategories[i];
       let channels = await getChannelsInCategory(category);
-      debugMessage += ` - ${category} channels: [${channels.join(", ")}]\n`;
+      debugObject[category] = channels; // Add the category and its channels to the debugObject
     }
 
+    // Log and alert the JSON object
+    const debugMessage = JSON.stringify(debugObject, null, 2); // Pretty-print the JSON
     console.log(debugMessage);
-    alert(debugMessage);
+    alert(
+      "Debugging information logged to console. Check the console for details."
+    );
   });
 }
 
