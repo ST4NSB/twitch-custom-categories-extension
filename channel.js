@@ -14,6 +14,14 @@ async function main() {
   }
 }
 
-window.onload = function () {
+if (typeof InstallTrigger !== "undefined") {
+  console.log("Twitch Custom Categories - channel.js - Firefox detected");
+
   main();
-};
+} else if (typeof chrome !== "undefined") {
+  console.log("Twitch Custom Categories - channel.js - Chrome detected");
+
+  window.onload = function () {
+    main();
+  };
+}

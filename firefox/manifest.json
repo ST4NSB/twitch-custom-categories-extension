@@ -6,6 +6,11 @@
   "description": "Enhance your twitch.tv experience with our Firefox extension! Customize your front page by adding personalized categories to organize and discover your favorite streamers effortlessly",
   "version": "2",
   "content_security_policy": "script-src 'self'; object-src 'self';",
+  "applications": {
+    "gecko": {
+      "id": "YOUR EXTENSION ID"
+    }
+  },
   "web_accessible_resources": ["assets/*.css", ".env", "saved_categories.json"],
   "content_scripts": [
     {
