@@ -33,7 +33,7 @@ function createChannelDetailsModal(category, data, hiddenClass) {
       ? (data.viewer_count / 1000).toFixed(1) + "k"
       : data.viewer_count;
 
-  return `<div style="max-width: 20%; transition-property: transform, opacity; transition-timing-function: ease;"
+  return `<div style="transition-property: transform, opacity; transition-timing-function: ease;"
             class="ScTransitionBase-sc-hx4quq-0 bUHYlK tw-transition customTwitchCategoryChannelPanel ${hiddenClass}">
               <div class="shelf-card__impression-wrapper">
                 <div data-test-selector="shelf-card-selector" class="Layout-sc-1xcs6mc-0 hFIrVr iaYZdR">
@@ -158,6 +158,33 @@ function createChannelDetailsModal(category, data, hiddenClass) {
           </div>`;
 }
 
+function hideCategoryChannelBasedOnDisplayWidth(index) {
+  // get the width of the screen
+  const screenWidth = window.innerWidth;
+
+  if (screenWidth >= 1920) {
+    return false;
+  }
+
+  if (screenWidth < 1920 && screenWidth >= 1490 && index >= 4) {
+    return true;
+  }
+
+  if (screenWidth < 1490 && screenWidth >= 1000 && index >= 3) {
+    return true;
+  }
+
+  if (screenWidth < 1000 && screenWidth >= 700 && index >= 2) {
+    return true;
+  }
+
+  if (screenWidth < 700 && index >= 1) {
+    return true;
+  }
+
+  return false;
+}
+
 function renderCategoryChannels(category, liveChannels) {
   const referenceElement = document.querySelector(
     "#following-page-main-content > div:nth-child(1) > div:nth-child(1)"
@@ -169,15 +196,20 @@ function renderCategoryChannels(category, liveChannels) {
       ${createCategoryTitle(category, liveChannels.length)}
       <div aria-labelledby="b6eb5fd44b1b1bee">
         <div class="InjectLayout-sc-1i43xsx-0 eptOJT tw-transition-group">
-          <div class="ScTower-sc-1sjzzes-0 czzjEE RMeqZ tw-tower">
+          <div class="ScTower-sc-1sjzzes-0 czzjEE RMeqZ tw-tower twitch-categories-parent">
             ${liveChannels
               .map((x, i) =>
                 createChannelDetailsModal(
                   category,
                   x,
-                  i >= 5 ? "hiddenChannel" : ""
+                  i >= 5 || hideCategoryChannelBasedOnDisplayWidth(i)
+                    ? "hiddenChannel"
+                    : ""
                 )
               )
+              .join("")}
+            ${Array.from({ length: 5 })
+              .map(() => '<div class="empty-div"></div>')
               .join("")}
           </div>
         </div>
@@ -187,7 +219,10 @@ function renderCategoryChannels(category, liveChannels) {
                       <div class="Layout-sc-1xcs6mc-0 dNDhLW kcCKxL show-more__line"></div>
                   </div>
                   ${
-                    liveChannels.length > 5
+                    liveChannels.filter(
+                      (_, i) =>
+                        i >= 5 || hideCategoryChannelBasedOnDisplayWidth(i)
+                    ).length > 0
                       ? `<div class="Layout-sc-1xcs6mc-0 eajNuk gUMpqp">
                             <button id="showmore_${category}"
                                   class="ScCoreButton-sc-ocjdkq-0 showMoreBttn ScCoreButtonText-sc-ocjdkq-3 ibtYyW jYfhUy hZACqf dgtHA-D">
